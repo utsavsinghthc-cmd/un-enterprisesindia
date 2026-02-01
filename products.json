@@ -1,52 +1,88 @@
 [
   {
-    "id": 1,
     "category": "Electrical Items & Accessories",
     "image": "images/electrical.jpg",
-    "price": "₹500 – ₹10,000",
-    "items": ["Switches", "Wires", "LED Lights"]
+    "price": "₹100 – ₹10,000",
+    "products": [
+      "Electrical Switches",
+      "Sockets & Regulators",
+      "Wires & Cables",
+      "LED Lights",
+      "MCB & Switchgears",
+      "Extension Boards"
+    ]
   },
   {
-    "id": 2,
     "category": "Office Automation Products",
     "image": "images/automation.jpg",
     "price": "₹5,000 – ₹80,000",
-    "items": ["Photocopiers", "Printers", "Scanners"]
+    "products": [
+      "Photocopier Machines",
+      "Printers",
+      "Multifunction Machines",
+      "Scanners",
+      "Projectors",
+      "Shredders"
+    ]
   },
   {
-    "id": 3,
     "category": "Office Furniture",
     "image": "images/furniture.jpg",
     "price": "₹1,500 – ₹50,000",
-    "items": ["Chairs", "Tables", "Workstations"]
+    "products": [
+      "Office Chairs",
+      "Office Tables",
+      "Workstations",
+      "Computer Tables",
+      "Filing Cabinets"
+    ]
   },
   {
-    "id": 4,
     "category": "Stationery Items",
     "image": "images/stationery.jpg",
     "price": "₹50 – ₹5,000",
-    "items": ["Paper", "Files", "Pens"]
+    "products": [
+      "A4 Paper",
+      "Files & Folders",
+      "Registers",
+      "Pens & Markers",
+      "Staplers"
+    ]
   },
   {
-    "id": 5,
     "category": "Photocopiers",
     "image": "images/photocopier.jpg",
     "price": "₹20,000 – ₹2,00,000",
-    "items": ["B&W", "Color", "High Speed"]
+    "products": [
+      "Black & White Photocopiers",
+      "Color Photocopiers",
+      "High Speed Machines",
+      "Refurbished Photocopiers",
+      "AMC Services"
+    ]
   },
   {
-    "id": 6,
     "category": "Printers",
     "image": "images/printer.jpg",
     "price": "₹3,000 – ₹60,000",
-    "items": ["Inkjet", "Laser", "All-in-One"]
+    "products": [
+      "Inkjet Printers",
+      "Laser Printers",
+      "All-in-One Printers",
+      "Network Printers"
+    ]
   },
   {
-    "id": 7,
     "category": "Printer Cartridges & Consumables",
     "image": "images/cartridge.jpg",
     "price": "₹500 – ₹8,000",
-    "items": ["Toner", "Ink", "Drum Units"]
+    "products": [
+      "Toner Cartridges",
+      "Ink Cartridges",
+      "Drum Units",
+      "Printer Ribbons",
+      "Maintenance Kits"
+    ]
   }
 ]
 
