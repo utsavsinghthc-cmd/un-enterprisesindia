@@ -1,21 +1,44 @@
+let cart = [];
+let allProducts = [];
+
 fetch("products.json")
 .then(res => res.json())
 .then(data => {
+    allProducts = data;
+    displayProducts(data);
+});
+
+function displayProducts(data) {
     let html = "";
-    data.forEach(cat => {
+    data.forEach(p => {
         html += `
         <div class="product-card">
-            <img src="${cat.image}">
-            <h3>${cat.category}</h3>
-            <ul>`;
-        cat.items.forEach(item => {
-            html += `<li>${item}</li>`;
-        });
-        html += `
-            </ul>
-            <a href="https://wa.me/919889482011?text=Hello%20UN%20ENTERPRISES,%20I%20want%20details%20about%20${encodeURIComponent(cat.category)}"
-               target="_blank">Enquire on WhatsApp</a>
+            <img src="${p.image}">
+            <h3>${p.category}</h3>
+            <p><b>Price:</b> ${p.price}</p>
+            <button onclick="addToCart(${p.id})">Add to Cart</button>
         </div>`;
     });
     document.getElementById("products").innerHTML = html;
-});
+}
+
+function addToCart(id) {
+    let product = allProducts.find(p => p.id === id);
+    cart.push(product);
+    document.getElementById("cartCount").innerText = cart.length;
+    alert(product.category + " added to cart");
+}
+
+function openCart() {
+    if (cart.length === 0) {
+        alert("Cart is empty");
+        return;
+    }
+
+    let msg = "Hello UN ENTERPRISES, I want to enquire about:\n";
+    cart.forEach(p => {
+        msg += `- ${p.category} (${p.price})\n`;
+    });
+
+    window.open("https://wa.me/919889482011?text=" + encodeURIComponent(msg));
+}
