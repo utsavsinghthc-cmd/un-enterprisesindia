@@ -101,3 +101,52 @@ function checkout() {
       "_blank"
     );
 }
+function openCart() {
+    let popup = document.getElementById("cartPopup");
+    let itemsBox = document.getElementById("cartItems");
+
+    if (cart.length === 0) {
+        itemsBox.innerHTML = "<p>Your cart is empty</p>";
+    } else {
+        let html = "";
+        cart.forEach((p, i) => {
+            html += `
+              <div class="cart-item">
+                <b>${p.category}</b><br>
+                Price: ${p.price}
+                <br>
+                <button onclick="removeFromCart(${i})">Remove</button>
+              </div>`;
+        });
+        itemsBox.innerHTML = html;
+    }
+
+    popup.style.display = "block";
+}
+
+function closeCart() {
+    document.getElementById("cartPopup").style.display = "none";
+}
+
+function removeFromCart(i) {
+    cart.splice(i, 1);
+    document.getElementById("cartCount").innerText = cart.length;
+    openCart();
+}
+
+function checkout() {
+    if (cart.length === 0) {
+        alert("Cart is empty");
+        return;
+    }
+
+    let msg = "Hello UN ENTERPRISES, I want to enquire about:\n";
+    cart.forEach(p => {
+        msg += `- ${p.category} (${p.price})\n`;
+    });
+
+    window.open(
+      "https://wa.me/916386319056?text=" + encodeURIComponent(msg),
+      "_blank"
+    );
+}
