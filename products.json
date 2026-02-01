@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Photocopier",
+    "image": "images/photocopier.jpg",
+    "desc": "Office photocopier"
+  },
+  {
+    "name": "Printer",
+    "image": "images/printer.jpg",
+    "desc": "Laser & Inkjet printers"
+  }
+]
