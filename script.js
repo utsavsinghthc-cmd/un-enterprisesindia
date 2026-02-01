@@ -42,3 +42,10 @@ function openCart() {
 
     window.open("https://wa.me/919889482011?text=" + encodeURIComponent(msg));
 }
+function searchProducts() {
+    let val = document.getElementById("search").value.toLowerCase();
+    let filtered = allProducts.filter(p =>
+        p.category.toLowerCase().includes(val)
+    );
+    displayProducts(filtered);
+}
