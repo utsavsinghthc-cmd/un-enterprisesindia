@@ -1,12 +1,78 @@
 [
   {
-    "name": "Photocopier",
-    "image": "images/photocopier.jpg",
-    "desc": "Office photocopier"
+    "category": "Electrical Items & Accessories",
+    "image": "images/electrical.jpg",
+    "items": [
+      "Electrical Switches & Sockets",
+      "Wires & Cables",
+      "LED Lights & Tube Lights",
+      "MCB & Switchgears",
+      "Extension Boards & Power Strips"
+    ]
   },
   {
-    "name": "Printer",
+    "category": "Office Automation Products",
+    "image": "images/automation.jpg",
+    "items": [
+      "Photocopier Machines",
+      "Printers (Laser & Inkjet)",
+      "Multifunction Machines",
+      "Scanners",
+      "Shredders & Projectors"
+    ]
+  },
+  {
+    "category": "Office Furniture",
+    "image": "images/furniture.jpg",
+    "items": [
+      "Office Chairs",
+      "Office Tables & Workstations",
+      "Computer Tables",
+      "Filing Cabinets",
+      "Conference Furniture"
+    ]
+  },
+  {
+    "category": "Stationery Items",
+    "image": "images/stationery.jpg",
+    "items": [
+      "A4 & Copier Paper",
+      "Files & Folders",
+      "Registers & Notebooks",
+      "Pens & Markers",
+      "Staplers & Office Supplies"
+    ]
+  },
+  {
+    "category": "Photocopiers",
+    "image": "images/photocopier.jpg",
+    "items": [
+      "Black & White Photocopiers",
+      "Color Photocopiers",
+      "High-Speed Office Machines",
+      "New & Refurbished Photocopiers",
+      "AMC & Maintenance"
+    ]
+  },
+  {
+    "category": "Printers",
     "image": "images/printer.jpg",
-    "desc": "Laser & Inkjet printers"
+    "items": [
+      "Inkjet Printers",
+      "Laser Printers",
+      "All-in-One Printers",
+      "Network Printers"
+    ]
+  },
+  {
+    "category": "Printer Cartridges & Consumables",
+    "image": "images/cartridge.jpg",
+    "items": [
+      "Toner Cartridges",
+      "Ink Cartridges",
+      "Drum Units",
+      "Printer Ribbons",
+      "Maintenance Kits"
+    ]
   }
 ]
