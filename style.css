@@ -241,6 +241,20 @@ h1, h2, h3 {
     background: #ff9900;
     color: black;
 }
+function filterCategory(cat) {
+    let cards = document.getElementsByClassName("product-card");
+
+    for (let i = 0; i < cards.length; i++) {
+        let category = cards[i].getAttribute("data-category");
+
+        if (cat === "all" || category.includes(cat)) {
+            cards[i].style.display = "block";
+        } else {
+            cards[i].style.display = "none";
+        }
+    }
+}
+
 
 
 
