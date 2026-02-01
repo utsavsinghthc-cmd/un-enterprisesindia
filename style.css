@@ -222,6 +222,26 @@ h1, h2, h3 {
     margin: 20px 0;
     font-size: 16px;
 }
+.filter-buttons {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.filter-buttons button {
+    margin: 5px;
+    padding: 8px 14px;
+    border: none;
+    background: #003366;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.filter-buttons button:hover {
+    background: #ff9900;
+    color: black;
+}
+
 
 
 
