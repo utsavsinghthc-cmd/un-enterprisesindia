@@ -1,3 +1,5 @@
+alert("SCRIPT JS LOADED");
+
 let allProducts = [];
 let cart = [];
 
