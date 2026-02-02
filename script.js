@@ -8,9 +8,7 @@ fetch("products.json?v=FINAL_2026")
     allProducts = data;
     renderProducts(data);
   })
-  .catch(err => {
-    console.error("JSON load failed:", err);
-  });
+ 
 
 /* RENDER PRODUCTS */
 function renderProducts(data) {
