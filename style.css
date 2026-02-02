@@ -27,12 +27,14 @@ body {
 
 
 .container {
-    background-color: white;
-    width: 80%;
+    width: 90%;
+    max-width: 1200px;
     margin: 30px auto;
-    padding: 25px;
+    background: white;
+    padding: 40px;
     border-radius: 10px;
 }
+
 
 h1, h2, h3 {
     color: #003366;
@@ -319,6 +321,7 @@ function filterCategory(cat) {
     background: #25D366;
     color: white;
 }
+
 
 
 
