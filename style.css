@@ -350,17 +350,39 @@ function filterCategory(cat) {
 }
 
 
+/* TRUST SECTION */
 .trust {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 25px;
 
-    max-width: 1200px;   /* 🔥 CENTER FIX */
-    margin: 0 auto;      /* 🔥 CENTER FIX */
+    max-width: 1200px;
+    margin: 0 auto;          /* 🔥 Centered */
 
     padding: 50px 20px;
     background: #f4f6f8;
 }
+
+.trust-card {
+    background: white;
+    padding: 25px 20px;
+    border-radius: 10px;
+    text-align: center;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+
+.trust-card h3 {
+    color: #003366;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.trust-card p {
+    font-size: 14px;
+    color: #555;
+}
+
 
 
 
