@@ -434,6 +434,28 @@ function filterCategory(cat) {
     color: #0
 
 
+/* PRODUCT BADGE */
+.badge {
+    background: #003366;
+    color: #ffffff;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+/* Optional different badge colors */
+.badge.popular {
+    background: #ff9900;
+    color: #000;
+}
+
+.badge.gst {
+    background: #2e7d32;
+}
+
 
 
 
