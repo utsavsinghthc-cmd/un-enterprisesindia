@@ -456,6 +456,25 @@ function filterCategory(cat) {
     background: #2e7d32;
 }
 
+/* CART ICON FIX */
+.cart-link {
+  color: #fff;              /* navbar text color */
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.cart-link i {
+  font-size: 18px;
+  color: #fff;              /* force icon visible */
+}
+
+#cartCount {
+  font-weight: 600;
+}
+
 
 
 
