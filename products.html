@@ -18,6 +18,30 @@
 
 <div class="container">
     <h2>Our Products</h2>
+    <!-- SEARCH + FILTER TOOLS -->
+<div class="tools">
+
+  <!-- SEARCH BOX -->
+  <input 
+    type="text"
+    id="search"
+    placeholder="Search products..."
+    onkeyup="searchProducts()">
+
+  <!-- FILTER BUTTONS -->
+  <div class="filter-buttons">
+    <button onclick="filterCategory('all')">All</button>
+    <button onclick="filterCategory('electrical')">Electrical</button>
+    <button onclick="filterCategory('automation')">Automation</button>
+    <button onclick="filterCategory('furniture')">Furniture</button>
+    <button onclick="filterCategory('stationery')">Stationery</button>
+    <button onclick="filterCategory('photocopier')">Photocopiers</button>
+    <button onclick="filterCategory('printer')">Printers</button>
+    <button onclick="filterCategory('cartridge')">Cartridges</button>
+  </div>
+
+</div>
+
     <div class="filter-buttons">
     <button onclick="filterCategory('all')">All</button>
     <button onclick="filterCategory('Electrical')">Electrical</button>
@@ -83,6 +107,7 @@
 
 </body>
 </html>
+
 
 
 
