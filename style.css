@@ -59,10 +59,13 @@ h1, h2, h3 {
     text-decoration: none;
     font-weight: bold;
 }
+
 .product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .product-card {
@@ -429,6 +432,7 @@ function filterCategory(cat) {
 .product-card h3 {
     font-size: 18px;
     color: #0
+
 
 
 
