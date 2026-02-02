@@ -6,42 +6,75 @@ fetch("products.json")
   .then(r => r.json())
   .then(data => {
     allProducts = data;
-    show(allProducts);
+    renderProducts(allProducts);
   });
 
-function show(list) {
-  let out = "";
-  list.forEach((p, i) => {
-    out += `
+/* RENDER PRODUCTS */
+function renderProducts(list) {
+  let html = "";
+
+  list.forEach((cat, idx) => {
+    html += `
       <div class="product-card">
-        <img src="${p.image}">
-        <h3>${p.category}</h3>
-        <p>${p.price}</p>
-        <button onclick="addToCart(${i})">Add to Cart</button>
+        <img src="${cat.image}">
+        <h3>${cat.category}</h3>
+        <p><b>Price:</b> ${cat.price}</p>
+
+        <ul>
+          ${cat.products.map(item => `<li>${item}</li>`).join("")}
+        </ul>
+
+        <button onclick="addToCart(${idx})">Add to Cart</button>
       </div>
     `;
   });
-  document.getElementById("products").innerHTML = out;
+
+  document.getElementById("products").innerHTML = html;
 }
 
 /* FILTER */
 function filterCategory(key) {
   if (key === "all") {
-    show(allProducts);
-  } else {
-    show(allProducts.filter(p => p.categoryKey === key));
+    renderProducts(allProducts);
+    return;
   }
+  const filtered = allProducts.filter(p => p.categoryKey === key);
+  renderProducts(filtered);
 }
 
 /* SEARCH */
 function searchProducts() {
-  let v = document.getElementById("search").value.toLowerCase();
-  show(allProducts.filter(p => p.category.toLowerCase().includes(v)));
+  const v = document.getElementById("search").value.toLowerCase();
+  const filtered = allProducts.filter(p =>
+    p.category.toLowerCase().includes(v)
+  );
+  renderProducts(filtered);
 }
 
 /* CART */
-function addToCart(i) {
-  cart.push(allProducts[i]);
+function addToCart(index) {
+  cart.push(allProducts[index]);
   document.getElementById("cartCount").innerText = cart.length;
 }
 
+function openCart() {
+  const box = document.getElementById("cartItems");
+  const popup = document.getElementById("cartPopup");
+
+  if (cart.length === 0) {
+    box.innerHTML = "<p>Your cart is empty</p>";
+  } else {
+    box.innerHTML = cart.map((c, i) => `
+      <div class="cart-item">
+        <b>${c.category}</b><br>
+        ${c.price}<br>
+        <button onclick="removeFromCart(${i})">Remove</button>
+      </div>
+    `).join("");
+  }
+  popup.style.display = "block";
+}
+
+function closeCart() {
+  document.getElementById("cartPopup").style.display = "none";
+}
