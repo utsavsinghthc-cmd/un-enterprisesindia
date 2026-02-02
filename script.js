@@ -14,10 +14,14 @@ function renderProducts(list) {
   let html = "";
 
   list.forEach(product => {
-    html += `
-      <div class="product-card">
-        <img src="${product.image}">
-        <h3>${product.category}</h3>
+   html += `
+  <div class="product-card">
+    <span class="badge gst">GST Registered</span>
+    <img src="${product.image}">
+    <h3>${product.category}</h3>
+    ...
+`;
+>
         <p><b>Price:</b> ${product.price}</p>
 
         <ul>
