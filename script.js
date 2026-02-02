@@ -1,22 +1,23 @@
+
 let allProducts = [];
 let cart = [];
 
 /* LOAD PRODUCTS */
 fetch("products.json?v=FINAL_2026")
-  .then(response => response.json())
+  .then(res => res.json())
   .then(data => {
     allProducts = data;
     renderProducts(data);
-  })
- 
+  });
 
 /* RENDER PRODUCTS */
 function renderProducts(data) {
   let html = "";
 
   data.forEach(cat => {
-  const originalIndex = allProducts.indexOf(cat);
-   html += `
+    const originalIndex = allProducts.indexOf(cat);
+
+    html += `
       <div class="product-card">
         <img src="${cat.image}">
         <h3>${cat.category}</h3>
@@ -24,7 +25,7 @@ function renderProducts(data) {
         <ul>
           ${cat.products.map(p => `<li>${p}</li>`).join("")}
         </ul>
-        <button onclick="addToCart(${index})">Add to Cart</button>
+        <button onclick="addToCart(${originalIndex})">Add to Cart</button>
       </div>
     `;
   });
@@ -38,6 +39,7 @@ function filterCategory(key) {
     renderProducts(allProducts);
     return;
   }
+
   const filtered = allProducts.filter(p => p.categoryKey === key);
   renderProducts(filtered);
 }
