@@ -14,8 +14,9 @@ fetch("products.json?v=FINAL_2026")
 function renderProducts(data) {
   let html = "";
 
-  data.forEach((cat, index) => {
-    html += `
+  data.forEach(cat => {
+  const originalIndex = allProducts.indexOf(cat);
+   html += `
       <div class="product-card">
         <img src="${cat.image}">
         <h3>${cat.category}</h3>
