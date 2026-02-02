@@ -3,7 +3,7 @@ let cart = [];
 
 /* LOAD PRODUCTS */
 fetch("products.json")
-  .then(r => r.json())
+  .then(res => res.json())
   .then(data => {
     allProducts = data;
     renderProducts(allProducts);
@@ -13,18 +13,20 @@ fetch("products.json")
 function renderProducts(list) {
   let html = "";
 
-  list.forEach((cat, idx) => {
+  list.forEach(product => {
     html += `
       <div class="product-card">
-        <img src="${cat.image}">
-        <h3>${cat.category}</h3>
-        <p><b>Price:</b> ${cat.price}</p>
+        <img src="${product.image}">
+        <h3>${product.category}</h3>
+        <p><b>Price:</b> ${product.price}</p>
 
         <ul>
-          ${cat.products.map(item => `<li>${item}</li>`).join("")}
+          ${product.products.map(i => `<li>${i}</li>`).join("")}
         </ul>
 
-        <button onclick="addToCart(${idx})">Add to Cart</button>
+        <button onclick='addToCart(${JSON.stringify(product)})'>
+          Add to Cart
+        </button>
       </div>
     `;
   });
@@ -36,24 +38,24 @@ function renderProducts(list) {
 function filterCategory(key) {
   if (key === "all") {
     renderProducts(allProducts);
-    return;
+  } else {
+    renderProducts(allProducts.filter(p => p.categoryKey === key));
   }
-  const filtered = allProducts.filter(p => p.categoryKey === key);
-  renderProducts(filtered);
 }
 
 /* SEARCH */
 function searchProducts() {
-  const v = document.getElementById("search").value.toLowerCase();
-  const filtered = allProducts.filter(p =>
-    p.category.toLowerCase().includes(v)
+  const val = document.getElementById("search").value.toLowerCase();
+  renderProducts(
+    allProducts.filter(p =>
+      p.category.toLowerCase().includes(val)
+    )
   );
-  renderProducts(filtered);
 }
 
 /* CART */
-function addToCart(index) {
-  cart.push(allProducts[index]);
+function addToCart(product) {
+  cart.push(product);
   document.getElementById("cartCount").innerText = cart.length;
 }
 
@@ -66,15 +68,4 @@ function openCart() {
   } else {
     box.innerHTML = cart.map((c, i) => `
       <div class="cart-item">
-        <b>${c.category}</b><br>
-        ${c.price}<br>
-        <button onclick="removeFromCart(${i})">Remove</button>
-      </div>
-    `).join("");
-  }
-  popup.style.display = "block";
-}
 
-function closeCart() {
-  document.getElementById("cartPopup").style.display = "none";
-}
