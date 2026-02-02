@@ -327,6 +327,28 @@ function filterCategory(cat) {
     background: #25D366;
     color: white;
 }
+.hero {
+    background: linear-gradient(to right, #003366, #0059b3);
+    color: white;
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.hero h1 {
+    font-size: 38px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 18px;
+    max-width: 800px;
+    margin: 0 auto 25px;
+}
+
+.hero-buttons a {
+    margin: 10px;
+}
+
 
 
 
