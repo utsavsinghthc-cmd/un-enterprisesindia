@@ -1,8 +1,10 @@
 body {
-    font-family: Arial;
     margin: 0;
-    background-color: #f4f4f4;
+    font-family: 'Poppins', Arial, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
 }
+
 
 .navbar {
     background-color: #003366;
@@ -310,6 +312,7 @@ function filterCategory(cat) {
     background: #25D366;
     color: white;
 }
+
 
 
 
