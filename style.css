@@ -499,6 +499,26 @@ function filterCategory(cat) {
   align-items: center;
 }
 
+/* GUARANTEED CART ICON */
+.cart-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #ffffff;       /* navbar dark ho to */
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.cart-svg svg {
+  width: 20px;
+  height: 20px;
+  color: #ffffff;
+}
+
+.cart-count {
+  font-weight: 600;
+}
+
 
 
 
