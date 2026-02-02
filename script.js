@@ -19,8 +19,6 @@ function renderProducts(list) {
     <span class="badge gst">GST Registered</span>
     <img src="${product.image}">
     <h3>${product.category}</h3>
-    ...
-`;
 >
         <p><b>Price:</b> ${product.price}</p>
 
