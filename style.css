@@ -8,16 +8,23 @@ body {
 
 .navbar {
     background-color: #003366;
-    padding: 12px;
-    text-align: center;
+    padding: 14px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .navbar a {
     color: white;
     text-decoration: none;
-    margin: 15px;
-    font-weight: bold;
+    margin-left: 18px;
+    font-weight: 600;
 }
+
+.navbar a:hover {
+    color: #ff9900;
+}
+
 
 .container {
     background-color: white;
@@ -312,6 +319,7 @@ function filterCategory(cat) {
     background: #25D366;
     color: white;
 }
+
 
 
 
