@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
 
@@ -17,31 +18,42 @@
     <meta property="og:description" content="Office supplies, printers, photocopiers and electrical products by UN Enterprises.">
     <meta property="og:url" content="https://unenterprisesindia.in/products.html">
     <meta property="og:type" content="website">
+    <meta property="og:image" content="https://unenterprisesindia.in/images/printer.jpg">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/printer.jpg" type="image/jpeg">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <!-- NAVBAR -->
-<div class="navbar">
-    <a href="index.html">Home</a>
-    <a href="products.html">Products</a>
-    <a href="contact.html">Contact</a>
-   <a href="#" onclick="openCart()" class="cart-link">
-  <span class="cart-icon">🛒</span>
-  (<span id="cartCount">0</span>)
-</a>
+<nav class="navbar">
+    <div class="logo">UN ENTERPRISES</div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="contact.html">Contact</a>
+        <a href="#" onclick="openCart()" class="cart-link">
+            <span class="cart-icon">🛒</span>
+            (<span id="cartCount">0</span>)
+        </a>
+    </div>
+</nav>
 
-</div>
+<section class="page-hero">
+    <h1>Our Products</h1>
+    <p>Explore automation, printing, stationery, furniture, and electrical essentials for every office setup.</p>
+    <a href="contact.html" class="btn-primary">Request a Quotation</a>
+</section>
 
 <div class="container">
-    <h2>Our Products</h2>
+    <h2>Browse by Category</h2>
 
     <!-- SEARCH + FILTER TOOLS -->
     <div class="tools">
-
         <input
             type="text"
             id="search"
@@ -58,17 +70,15 @@
             <button onclick="filterCategory('printer')">Printers</button>
             <button onclick="filterCategory('cartridge')">Cartridges</button>
         </div>
-
     </div>
 
     <!-- PRODUCTS (AUTO LOADED FROM products.json) -->
     <div class="product-grid" id="products"></div>
-
 </div>
 
 <!-- WHATSAPP FLOAT -->
 <a href="https://wa.me/916386319056?text=Hello%20UN%20ENTERPRISES,%20I%20want%20to%20enquire%20about%20your%20products."
-   class="whatsapp-float" target="_blank">
+   class="whatsapp-float" target="_blank" rel="noopener">
    Chat on WhatsApp
 </a>
 
@@ -87,8 +97,7 @@
 </div>
 
 <!-- JS -->
-<script src="script.js?v=FINAL_2026"></script>
-
+<script src="script.js?v=FINAL_2026" defer></script>
 
 </body>
 </html>
