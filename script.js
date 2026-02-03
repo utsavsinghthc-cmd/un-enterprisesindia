@@ -20,7 +20,7 @@ function renderProducts(list) {
 
     html += `
       <div class="product-card">
-        <img src="${product.image}">
+        <img src="${product.image}" alt="${product.category} product" loading="lazy" width="320" height="180">
         <h3>${product.category}</h3>
         <p><b>Price:</b> ${product.price}</p>
         <ul>
