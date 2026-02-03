@@ -553,6 +553,38 @@ function filterCategory(cat) {
 }
 
 
+/* HERO BUTTON FIX FOR MOBILE */
+@media (max-width: 768px) {
+
+  .hero {
+    padding: 60px 20px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 26px;
+    line-height: 1.3;
+  }
+
+  .hero p {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .hero-buttons {
+    display: flex;
+    flex-direction: column;   /* 👈 MOST IMPORTANT */
+    gap: 12px;
+    align-items: center;
+  }
+
+  .hero-buttons a {
+    width: 100%;
+    max-width: 260px;
+    text-align: center;
+  }
+}
+
 
 
 
