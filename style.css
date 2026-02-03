@@ -104,45 +104,7 @@ h1, h2, h3 {
     align-items: center;
 }
 
-/* HERO */
-.hero {
-    background: linear-gradient(to right, #003366, #0059b3);
-    color: white;
-    padding: 60px 20px;
-    text-align: center;
-}
 
-.hero h1 {
-    font-size: 36px;
-}
-
-.hero p {
-    font-size: 18px;
-    max-width: 700px;
-    margin: 15px auto;
-}
-
-.hero-buttons {
-    margin-top: 20px;
-}
-
-.btn-primary, .btn-secondary {
-    padding: 12px 22px;
-    margin: 10px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
-.btn-primary {
-    background: #ff9900;
-    color: black;
-}
-
-.btn-secondary {
-    background: white;
-    color: #003366;
-}
 
 /* SERVICES */
 .services {
@@ -337,20 +299,6 @@ function filterCategory(cat) {
     padding: 80px 20px;
 }
 
-.hero h1 {
-    font-size: 38px;
-    margin-bottom: 15px;
-}
-
-.hero p {
-    font-size: 18px;
-    max-width: 800px;
-    margin: 0 auto 25px;
-}
-
-.hero-buttons a {
-    margin: 10px;
-}
 
 
 /* TRUST SECTION */
@@ -553,62 +501,8 @@ function filterCategory(cat) {
 }
 
 
-/* HERO BUTTON FIX FOR MOBILE */
-@media (max-width: 768px) {
-
-  .hero {
-    padding: 60px 20px;
-    text-align: center;
-  }
-
-  .hero h1 {
-    font-size: 26px;
-    line-height: 1.3;
-  }
-
-  .hero p {
-    font-size: 15px;
-    margin-bottom: 20px;
-  }
-
-  .hero-buttons {
-    display: flex;
-    flex-direction: column;   /* 👈 MOST IMPORTANT */
-    gap: 12px;
-    align-items: center;
-  }
-
-  .hero-buttons a {
-    width: 100%;
-    max-width: 260px;
-    text-align: center;
-  }
-}
 
 
-/* ===== FINAL MOBILE HERO FIX ===== */
-@media (max-width: 768px) {
-
-  /* HERO SECTION RESET */
-  .hero {
-    min-height: auto !important;
-    height: auto !important;
-    padding: 80px 16px 50px 16px !important;
-    display: block !important;
-    background-position: center !important;
-  }
-
-  .hero h1 {
-    font-size: 24px !important;
-    line-height: 1.25 !important;
-    margin-bottom: 12px !important;
-  }
-
-  .hero p {
-    font-size: 14px !important;
-    line-height: 1.5 !important;
-    margin-bottom: 22px !important;
-  }
 
   /* BUTTON CONTAINER – MAIN FIX */
   .hero-buttons {
@@ -629,6 +523,84 @@ function filterCategory(cat) {
     text-align: center !important;
   }
 
+}
+
+/* =========================
+   HERO SECTION (DESKTOP)
+========================= */
+.hero {
+  background: linear-gradient(to right, #003366, #0059b3);
+  color: #ffffff;
+  padding: 90px 20px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 38px;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 18px;
+  max-width: 800px;
+  margin: 0 auto 25px;
+}
+
+/* HERO BUTTONS (DESKTOP) */
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-buttons a {
+  padding: 12px 22px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: #ff9900;
+  color: #000000;
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: #003366;
+}
+
+/* =========================
+   HERO SECTION (MOBILE)
+========================= */
+@media (max-width: 768px) {
+
+  .hero {
+    padding: 70px 16px 50px;
+  }
+
+  .hero h1 {
+    font-size: 24px;
+    line-height: 1.3;
+  }
+
+  .hero p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-buttons a {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+    padding: 14px 0;
+  }
 }
 
 
