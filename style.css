@@ -369,6 +369,9 @@ h3 {
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
   z-index: 999;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px 16px;
 }
 
 
@@ -376,7 +379,7 @@ h3 {
   background: #fff;
   width: 90%;
   max-width: 400px;
-  margin: 80px auto;
+  margin: 0 auto;
   padding: 20px;
   border-radius: 16px;
   box-shadow: var(--shadow-lg);
@@ -466,6 +469,7 @@ h3 {
     padding: 14px 0;
   }
 }
+
 
 
 
