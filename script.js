@@ -75,7 +75,7 @@ function openCart() {
     `).join("");
   }
 
-  popup.style.display = "block";
+   popup.style.display = "flex";
 }
 
 function closeCart() {
