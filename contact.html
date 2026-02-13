@@ -32,6 +32,12 @@
 window.addEventListener("DOMContentLoaded", function () {
   const contactForm = document.getElementById("contactForm");
   const successMessage = document.getElementById("successMessage");
+  const db = window.firebaseServices && window.firebaseServices.db;
+
+  if (!db) {
+    console.error("Firestore is not initialized.");
+    return;
+  }
 
   contactForm.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -99,37 +105,7 @@ window.addEventListener("DOMContentLoaded", function () {
    Chat on WhatsApp
 </a>
 
-<script>
-window.addEventListener("DOMContentLoaded", function () {
-  const contactForm = document.getElementById("contactForm");
-  const successMessage = document.getElementById("successMessage");
 
-  contactForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const phone = document.getElementById("phone").value;
-    const message = document.getElementById("message").value;
-
-    db.collection("enquiries")
-      .add({
-        name: name,
-        email: email,
-        phone: phone,
-        message: message,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      })
-      .then(function () {
-        successMessage.style.display = "block";
-        contactForm.reset();
-      })
-      .catch(function (error) {
-        alert("Error: " + error.message);
-      });
-  });
-});
-</script>
 
 </body>
 </html>
