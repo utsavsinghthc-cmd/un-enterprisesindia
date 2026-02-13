@@ -31,6 +31,31 @@
 <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 <script defer src="firebase-config.js"></script>
+<script>
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  var name = document.getElementById("name").value;
+  var email = document.getElementById("email").value;
+  var phone = document.getElementById("phone").value;
+  var message = document.getElementById("message").value;
+
+  db.collection("enquiries").add({
+    name: name,
+    email: email,
+    phone: phone,
+    message: message,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  })
+  .then(function() {
+    document.getElementById("successMessage").style.display = "block";
+    document.getElementById("contactForm").reset();
+  })
+  .catch(function(error) {
+    alert("Error: " + error.message);
+  });
+});
+</script>
 
 <body>
 
@@ -81,6 +106,7 @@
 
 </body>
 </html>
+
 
 
 
