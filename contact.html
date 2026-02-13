@@ -2,61 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
     <title>Contact UN Enterprises | Office Products Supplier in Lucknow</title>
-
     <meta name="description" content="Contact UN Enterprises for enquiry related to office supplies, printers, photocopiers, stationery, office furniture and electrical items in Lucknow.">
-
     <meta name="keywords" content="contact UN Enterprises, office supplier Lucknow, printer dealer Lucknow">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="canonical" href="https://unenterprisesindia.in/contact.html">
-
     <meta property="og:title" content="Contact UN Enterprises">
     <meta property="og:description" content="Get in touch with UN Enterprises for office product enquiries in Lucknow.">
     <meta property="og:url" content="https://unenterprisesindia.in/contact.html">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://unenterprisesindia.in/images/photocopier.jpg">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="icon" href="images/photocopier.jpg" type="image/jpeg">
-
     <link rel="stylesheet" href="style.css">
+
+    <!-- Firebase -->
+    <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script defer src="firebase-config.js"></script>
 </head>
-<!-- Firebase -->
-<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<script defer src="firebase-config.js"></script>
-<script>
-document.getElementById("contactForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  var name = document.getElementById("name").value;
-  var email = document.getElementById("email").value;
-  var phone = document.getElementById("phone").value;
-  var message = document.getElementById("message").value;
-
-  db.collection("enquiries").add({
-    name: name,
-    email: email,
-    phone: phone,
-    message: message,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-  })
-  .then(function() {
-    document.getElementById("successMessage").style.display = "block";
-    document.getElementById("contactForm").reset();
-  })
-  .catch(function(error) {
-    alert("Error: " + error.message);
-  });
-});
-</script>
-
 <body>
 
 <nav class="navbar">
@@ -78,31 +45,55 @@ document.getElementById("contactForm").addEventListener("submit", function(e) {
     <h2>Business Enquiry</h2>
     <p>Please fill the form below. Our team will contact you.</p>
 
-   <form id="contactForm" class="contact-form">
+    <form id="contactForm" class="contact-form">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="email" id="email" placeholder="Your Email" required>
+      <input type="text" id="phone" placeholder="Phone Number" required>
+      <textarea id="message" placeholder="Your Requirement" required></textarea>
+      <button type="submit">Send Enquiry</button>
+    </form>
 
-  <input type="text" id="name" placeholder="Your Name" required>
-
-  <input type="email" id="email" placeholder="Your Email" required>
-
-  <input type="text" id="phone" placeholder="Phone Number" required>
-
-  <textarea id="message" placeholder="Your Requirement" required></textarea>
-
-  <button type="submit">Send Enquiry</button>
-
-</form>
-
-<p id="successMessage" style="display:none; color:green;">
-  ✅ Enquiry Sent Successfully!
-</p>
-
+    <p id="successMessage" style="display: none; color: green;">
+      ✅ Enquiry Sent Successfully!
+    </p>
 </div>
 
-<!-- WHATSAPP BUTTON -->
 <a href="https://wa.me/916386319056?text=Hello%20UN%20ENTERPRISES,%20I%20want%20to%20enquire%20about%20your%20products."
    class="whatsapp-float" target="_blank" rel="noopener">
    Chat on WhatsApp
 </a>
+
+<script>
+window.addEventListener("DOMContentLoaded", function () {
+  const contactForm = document.getElementById("contactForm");
+  const successMessage = document.getElementById("successMessage");
+
+  contactForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const message = document.getElementById("message").value;
+
+    db.collection("enquiries")
+      .add({
+        name: name,
+        email: email,
+        phone: phone,
+        message: message,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      })
+      .then(function () {
+        successMessage.style.display = "block";
+        contactForm.reset();
+      })
+      .catch(function (error) {
+        alert("Error: " + error.message);
+      });
+  });
+});
+</script>
 
 </body>
 </html>
