@@ -53,14 +53,24 @@
     <h2>Business Enquiry</h2>
     <p>Please fill the form below. Our team will contact you.</p>
 
-    <!-- GOOGLE FORM -->
-    <iframe
-      src="https://docs.google.com/forms/d/e/1FAIpQLSfiJ_mQMJvVS2YD1kj1JBwSTJcUr9uSQ4nkdr65iGTKv66Ziw/viewform?embedded=true"
-      width="100%"
-      height="1400"
-      frameborder="0">
-      Loading…
-    </iframe>
+   <form id="contactForm" class="contact-form">
+
+  <input type="text" id="name" placeholder="Your Name" required>
+
+  <input type="email" id="email" placeholder="Your Email" required>
+
+  <input type="text" id="phone" placeholder="Phone Number" required>
+
+  <textarea id="message" placeholder="Your Requirement" required></textarea>
+
+  <button type="submit">Send Enquiry</button>
+
+</form>
+
+<p id="successMessage" style="display:none; color:green;">
+  ✅ Enquiry Sent Successfully!
+</p>
+
 </div>
 
 <!-- WHATSAPP BUTTON -->
@@ -71,6 +81,7 @@
 
 </body>
 </html>
+
 
 
 
