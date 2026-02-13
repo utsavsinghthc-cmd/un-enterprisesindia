@@ -18,12 +18,47 @@
     <link rel="icon" href="images/photocopier.jpg" type="image/jpeg">
     <link rel="stylesheet" href="style.css">
 
-    <!-- Firebase -->
-    <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script defer src="firebase-config.js"></script>
+   
 </head>
+ <!-- Firebase CDN -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+<script src="firebase-config.js"></script>
+
+<script>
+window.addEventListener("DOMContentLoaded", function () {
+  const contactForm = document.getElementById("contactForm");
+  const successMessage = document.getElementById("successMessage");
+
+  contactForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const message = document.getElementById("message").value;
+
+    db.collection("enquiries")
+      .add({
+        name: name,
+        email: email,
+        phone: phone,
+        message: message,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      })
+      .then(function () {
+        successMessage.style.display = "block";
+        contactForm.reset();
+      })
+      .catch(function (error) {
+        alert("Error: " + error.message);
+      });
+  });
+});
+</script>
+   
 <body>
 
 <nav class="navbar">
@@ -97,6 +132,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
 </body>
 </html>
+
 
 
 
