@@ -11,5 +11,6 @@ firebase.initializeApp(firebaseConfig);
 
 // 🔥 MAKE DB GLOBAL
 window.db = firebase.firestore();
+window.auth = firebase.auth();
 
 console.log("Firebase connected successfully");
