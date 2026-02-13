@@ -524,6 +524,80 @@ h3 {
 
 
 
+.admin-wrap {
+  max-width: 1100px;
+}
+
+.admin-card {
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 24px;
+  background: #fff;
+}
+
+.admin-form {
+  display: grid;
+  gap: 12px;
+  max-width: 420px;
+}
+
+.admin-form input,
+.admin-form button {
+  font: inherit;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-soft);
+}
+
+.admin-form button {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-error {
+  color: #dc2626;
+  font-size: 14px;
+  min-height: 20px;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.admin-meta {
+  color: var(--text-muted);
+  margin-top: 0;
+}
+
+.admin-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+
+.admin-table th,
+.admin-table td {
+  border: 1px solid var(--border-soft);
+  padding: 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.admin-table th {
+  background: var(--surface-muted);
+}
 
 
 
