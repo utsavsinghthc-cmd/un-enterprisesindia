@@ -5,7 +5,8 @@
     projectId: "un-enterprises",
     storageBucket: "un-enterprises.firebasestorage.app",
     messagingSenderId: "1083661598291",
-    appId: "1:1083661598291:web:98a54861b83146e2c490a6"
+       appId: "1:1083661598291:web:98a54861b83146e2c490a6",
+    measurementId: "G-3K6XF0ZLWK"
   };
 
   if (!window.firebase) {
@@ -17,10 +18,15 @@
     firebase.initializeApp(firebaseConfig);
   }
 
-  window.firebaseServices = {
+ const services = {
     auth: firebase.auth(),
     db: firebase.firestore()
   };
 
+   if (typeof firebase.analytics === "function") {
+    services.analytics = firebase.analytics();
+  }
+
+  window.firebaseServices = services;
   console.log("Firebase connected successfully");
 })();
