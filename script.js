@@ -94,13 +94,42 @@ function checkout() {
     return;
   }
 
-  let msg = "Hello UN ENTERPRISES,\nGSTIN: 09BFEPS7093M1ZK\n\nI want to enquire about:\n";
-  cart.forEach(c => {
-    msg += `- ${c.category} (${c.price})\n`;
-  });
+  const customerName = prompt("Enter your name:");
+  const customerPhone = prompt("Enter your phone number:");
 
-  window.open(
-    "https://wa.me/916386319056?text=" + encodeURIComponent(msg),
-    "_blank"
-  );
+  if (!customerName || !customerPhone) {
+    alert("Name and phone required");
+    return;
+  }
+
+  const orderData = {
+    name: customerName,
+    phone: customerPhone,
+    items: cart,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  db.collection("orders").add(orderData)
+    .then(() => {
+      let msg = "Hello UN ENTERPRISES,\n\nNew Order:\n";
+      msg += "Name: " + customerName + "\n";
+      msg += "Phone: " + customerPhone + "\n\nProducts:\n";
+
+      cart.forEach(item => {
+        msg += "- " + item.category + " (" + item.price + ")\n";
+      });
+
+      window.open(
+        "https://wa.me/916386319056?text=" + encodeURIComponent(msg),
+        "_blank"
+      );
+
+      alert("Order Saved Successfully!");
+      cart = [];
+      document.getElementById("cartCount").innerText = 0;
+      closeCart();
+    })
+    .catch(error => {
+      alert("Error saving order: " + error.message);
+    });
 }
