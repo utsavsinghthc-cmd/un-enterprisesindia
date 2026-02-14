@@ -94,8 +94,21 @@ function checkout() {
     return;
   }
 
-  const customerName = prompt("Enter your name:");
+const customerName = prompt("Enter your name:");
   const customerPhone = prompt("Enter your phone number:");
+
+  if (!customerName || !customerPhone) {
+    alert("Name and phone required");
+    return;
+  }
+
+  let msg = "Hello UN ENTERPRISES,\nGSTIN: 09BFEPS7093M1ZK\n\nNew Order:\n";
+  msg += "Name: " + customerName + "\n";
+  msg += "Phone: " + customerPhone + "\n\nProducts:\n";
+
+  cart.forEach(item => {
+    msg += "- " + item.category + " (" + item.price + ")\n";
+   });
 
   if (!customerName || !customerPhone) {
     alert("Name and phone required");
