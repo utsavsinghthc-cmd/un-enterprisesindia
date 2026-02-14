@@ -47,10 +47,8 @@ function renderDashboardRows(state) {
     return;
   }
 
-  if (state.enquiriesError || state.ordersError) {
-    const enquiryError = state.enquiriesError ? `Enquiries: ${state.enquiriesError}` : "";
-    const ordersError = state.ordersError ? `Orders: ${state.ordersError}` : "";
-    tableBody.innerHTML = `<tr><td colspan="6">Error loading data. ${escapeHtml(enquiryError)} ${escapeHtml(ordersError)}</td></tr>`;
+  if (!state.enquiriesLoaded || !state.ordersLoaded) {
+    tableBody.innerHTML = '<tr><td colspan="6">Loading records...</td></tr>';
     return;
   }
 
@@ -78,7 +76,14 @@ function renderDashboardRows(state) {
     return;
   }
 
-  tableBody.innerHTML = combinedRows
+  let warningRow = "";
+  if (state.enquiriesError || state.ordersError) {
+    const enquiryError = state.enquiriesError ? `Enquiries: ${state.enquiriesError}` : "";
+    const ordersError = state.ordersError ? `Orders: ${state.ordersError}` : "";
+    warningRow = `<tr><td colspan="6">Warning: ${escapeHtml(enquiryError)} ${escapeHtml(ordersError)}</td></tr>`;
+  }
+
+  tableBody.innerHTML = warningRow + combinedRows
     .map(row => `
       <tr>
         <td>${escapeHtml(row.type)}</td>
@@ -113,7 +118,9 @@ window.addEventListener("DOMContentLoaded", () => {
     enquiries: [],
     orders: [],
     enquiriesError: "",
-    ordersError: ""
+    ordersError: "",
+    enquiriesLoaded: false,
+    ordersLoaded: false
   };
 
   const listeners = {
@@ -138,6 +145,8 @@ window.addEventListener("DOMContentLoaded", () => {
     state.orders = [];
     state.enquiriesError = "";
     state.ordersError = "";
+    state.enquiriesLoaded = false;
+    state.ordersLoaded = false;
   }
 
   if (!window.firebase || !window.auth || !window.db) {
@@ -169,24 +178,26 @@ window.addEventListener("DOMContentLoaded", () => {
 
       listeners.enquiriesUnsubscribe = window.db
         .collection("enquiries")
-        .orderBy("createdAt", "desc")
         .onSnapshot(snapshot => {
           state.enquiries = snapshot.docs.map(doc => doc.data());
+          state.enquiriesLoaded = true;
           state.enquiriesError = "";
           renderDashboardRows(state);
         }, error => {
+          state.enquiriesLoaded = true;
           state.enquiriesError = error.message;
           renderDashboardRows(state);
         });
 
       listeners.ordersUnsubscribe = window.db
         .collection("orders")
-        .orderBy("createdAt", "desc")
         .onSnapshot(snapshot => {
           state.orders = snapshot.docs.map(doc => doc.data());
+          state.ordersLoaded = true;
           state.ordersError = "";
           renderDashboardRows(state);
         }, error => {
+          state.ordersLoaded = true;
           state.ordersError = error.message;
           renderDashboardRows(state);
         });
