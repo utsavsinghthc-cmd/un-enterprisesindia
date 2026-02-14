@@ -118,6 +118,13 @@ window.addEventListener("DOMContentLoaded", () => {
         .onSnapshot(renderEnquiries, error => {
           byId("enquiryRows").innerHTML = `<tr><td colspan="5">Error: ${error.message}</td></tr>`;
         });
+
+       window.db
+        .collection("orders")
+        .orderBy("createdAt", "desc")
+        .onSnapshot(renderOrders, error => {
+          byId("orderRows").innerHTML = `<tr><td colspan="4">Error: ${error.message}</td></tr>`;
+        });
     } else {
       setLoggedOutView();
     }
