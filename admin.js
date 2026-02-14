@@ -1,197 +1,73 @@
-function byId(id) {
-  return document.getElementById(id);
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel | UN Enterprises</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Admin panel for managing customer enquiries and orders for UN Enterprises.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 
-function formatDate(timestamp) {
-  if (!timestamp || !timestamp.toDate) {
-    return "-";
-  }
-  
-  return timestamp.toDate().toLocaleString("en-IN", {
-    dateStyle: "medium",
-    timeStyle: "short"
-  });
-}
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script defer src="firebase-config.js"></script>
+  <script defer src="admin.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">UN ENTERPRISES</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="contact.html">Contact</a>
+      <a href="admin.html">Admin</a>
+    </div>
+  </nav>
 
-function toEpochMillis(timestamp) {
-  if (!timestamp || !timestamp.toDate) {
-    return 0;
-  }
+  <section class="page-hero">
+    <h1>Admin Panel</h1>
+    <p>Securely manage business enquiries and orders from one place.</p>
+  </section>
 
-  return timestamp.toDate().getTime();
-}
+  <div class="container admin-wrap">
+    <div id="loginCard" class="admin-card">
+      <h2>Admin Login</h2>
+      <p>Login with your Firebase admin account.</p>
+      <form id="loginForm" class="admin-form" autocomplete="on">
+        <input type="email" id="adminEmail" placeholder="Admin email" autocomplete="email" required>
+        <input type="password" id="adminPassword" placeholder="Password" autocomplete="current-password" required>
+        <button type="submit">Login</button>
+      </form>
+      <p id="loginError" class="admin-error"></p>
+    </div>
 
-function formatOrderItems(items) {
-  if (!Array.isArray(items) || items.length === 0) {
-    return "-";
-  }
+    <div id="dashboard" class="admin-card" style="display:none;">
+      <div class="admin-header">
+        <h2>Admin Dashboard</h2>
+        <button id="logoutBtn" class="btn-secondary">Logout</button>
+      </div>
+      <p class="admin-meta">Signed in as: <span id="adminUser">-</span></p>
 
-  return items
-    .map(item => `${item.category || "Product"} (${item.price || "N/A"})`)
-    .join(", ");
-}
-
-function renderDashboardRows(state) {
-  const tableBody = byId("dashboardRows");
-
-  if (state.enquiriesError || state.ordersError) {
-    const enquiryError = state.enquiriesError ? `Enquiries: ${state.enquiriesError}` : "";
-    const ordersError = state.ordersError ? `Orders: ${state.ordersError}` : "";
-    tableBody.innerHTML = `<tr><td colspan="6">Error loading data. ${enquiryError} ${ordersError}</td></tr>`;
-    return;
-  }
-
-  const combinedRows = [
-    ...state.enquiries.map(entry => ({
-      type: "Enquiry",
-      name: entry.name || "-",
-      email: entry.email || "-",
-      phone: entry.phone || "-",
-      details: entry.message || "-",
-      createdAt: entry.createdAt
-    })),
-    ...state.orders.map(order => ({
-      type: "Order",
-      name: order.name || "-",
-      email: "-",
-      phone: order.phone || "-",
-      details: formatOrderItems(order.items),
-      createdAt: order.createdAt
-    }))
-  ].sort((a, b) => toEpochMillis(b.createdAt) - toEpochMillis(a.createdAt));
-
-  if (combinedRows.length === 0) {
-    tableBody.innerHTML = '<tr><td colspan="6">No enquiries or orders found.</td></tr>';
-    return;
-  }
-
-  tableBody.innerHTML = combinedRows
-    .map(row => `
-      <tr>
-        <td>${row.type}</td>
-        <td>${row.name}</td>
-        <td>${row.email}</td>
-        <td>${row.phone}</td>
-        <td>${row.details}</td>
-        <td>${formatDate(row.createdAt)}</td>
-      </tr>
-    `)
-    .join("");
-}
-
-function formatOrderItems(items) {
-  if (!Array.isArray(items) || items.length === 0) {
-    return "-";
-  }
-
-  return items
-    .map(item => `${item.category || "Product"} (${item.price || "N/A"})`)
-    .join(", ");
-}
-
-function renderOrders(snapshot) {
-  const tableBody = byId("orderRows");
-
-  if (snapshot.empty) {
-    tableBody.innerHTML = '<tr><td colspan="4">No orders found.</td></tr>';
-    return;
-  }
-
-  tableBody.innerHTML = snapshot.docs
-    .map(doc => {
-      const order = doc.data();
-      return `
-        <tr>
-          <td>${order.name || "-"}</td>
-          <td>${order.phone || "-"}</td>
-          <td>${formatOrderItems(order.items)}</td>
-          <td>${formatDate(order.createdAt)}</td>
-        </tr>
-      `;
-    })
-    .join("");
-}
-
-
-function setLoggedInView(user) {
-  byId("loginCard").style.display = "none";
-  byId("dashboard").style.display = "block";
-  byId("adminUser").textContent = user.email;
-}
-
-function setLoggedOutView() {
-  byId("loginCard").style.display = "block";
-  byId("dashboard").style.display = "none";
-  byId("adminUser").textContent = "-";
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  const loginForm = byId("loginForm");
-  const loginError = byId("loginError");
-  const logoutBtn = byId("logoutBtn");
-  
- const state = {
-    enquiries: [],
-    orders: [],
-    enquiriesError: "",
-    ordersError: ""
-  };
-
-  const listeners = {
-    enquiriesUnsubscribe: null,
-    ordersUnsubscribe: null
-  };
-
-  function clearListeners() {
-    if (listeners.enquiriesUnsubscribe) {
-      listeners.enquiriesUnsubscribe();
-      listeners.enquiriesUnsubscribe = null;
-    }
-
-    if (listeners.ordersUnsubscribe) {
-      listeners.ordersUnsubscribe();
-      listeners.ordersUnsubscribe = null;
-    }
-  }
-  if (!window.firebase || !window.auth || !window.db) {
-    loginError.textContent = "Firebase is not initialized correctly.";
-    return;
-  }
-
-  loginForm.addEventListener("submit", event => {
-    event.preventDefault();
-    loginError.textContent = "";
-
-    const email = byId("adminEmail").value.trim();
-    const password = byId("adminPassword").value;
-
-      window.auth.signInWithEmailAndPassword(email, password).catch(error => {
-      loginError.textContent = error.message;
-    });
-  });
-
-  logoutBtn.addEventListener("click", () => {
-    window.auth.signOut();
-  });
-
-  window.auth.onAuthStateChanged(user => {
-    if (user) {
-      setLoggedInView(user);
-      window.db
-        .collection("enquiries")
-        .orderBy("createdAt", "desc")
-        .onSnapshot(renderEnquiries, error => {
-          byId("enquiryRows").innerHTML = `<tr><td colspan="5">Error: ${error.message}</td></tr>`;
-        });
-
-       window.db
-        .collection("orders")
-        .orderBy("createdAt", "desc")
-        .onSnapshot(renderOrders, error => {
-          byId("orderRows").innerHTML = `<tr><td colspan="4">Error: ${error.message}</td></tr>`;
-        });
-    } else {
-      setLoggedOutView();
-    }
-  });
-});
+      <div class="admin-table-wrap">
+        <h3>Enquiries + Orders</h3>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Details</th>
+              <th>Created</th>
+            </tr>
+          </thead>
+          <tbody id="dashboardRows"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
