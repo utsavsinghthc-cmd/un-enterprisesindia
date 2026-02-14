@@ -36,6 +36,39 @@ function renderEnquiries(snapshot) {
     .join("");
 }
 
+function formatOrderItems(items) {
+  if (!Array.isArray(items) || items.length === 0) {
+    return "-";
+  }
+
+  return items
+    .map(item => `${item.category || "Product"} (${item.price || "N/A"})`)
+    .join(", ");
+}
+
+function renderOrders(snapshot) {
+  const tableBody = byId("orderRows");
+
+  if (snapshot.empty) {
+    tableBody.innerHTML = '<tr><td colspan="4">No orders found.</td></tr>';
+    return;
+  }
+
+  tableBody.innerHTML = snapshot.docs
+    .map(doc => {
+      const order = doc.data();
+      return `
+        <tr>
+          <td>${order.name || "-"}</td>
+          <td>${order.phone || "-"}</td>
+          <td>${formatOrderItems(order.items)}</td>
+          <td>${formatDate(order.createdAt)}</td>
+        </tr>
+      `;
+    })
+    .join("");
+}
+
 function setLoggedInView(user) {
   byId("loginCard").style.display = "none";
   byId("dashboard").style.display = "block";
