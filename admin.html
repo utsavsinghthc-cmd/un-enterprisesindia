@@ -4,75 +4,73 @@
   <meta charset="UTF-8">
   <title>Admin Panel | UN Enterprises</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Admin panel for managing customer enquiries for UN Enterprises.">
+   <meta name="description" content="Admin panel for managing customer enquiries and orders for UN Enterprises.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
+    <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script defer src="firebase-config.js"></script>
+  <script defer src="admin.js"></script>
 </head>
-
-<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<script defer src="firebase-config.js"></script>
-<script defer src="admin.js"></script>
-
 <body>
 <nav class="navbar">
-  <div class="logo">UN ENTERPRISES</div>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="products.html">Products</a>
-    <a href="contact.html">Contact</a>
-    <a href="admin.html">Admin</a>
-  </div>
-</nav>
+    <div class="logo">UN ENTERPRISES</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="contact.html">Contact</a>
+      <a href="admin.html">Admin</a>
+    </div>
+  </nav>
 
 <section class="page-hero">
-  <h1>Admin Panel</h1>
-  <p>Securely manage business enquiries from one place.</p>
-</section>
+    <h1>Admin Panel</h1>
+    <p>Securely manage business enquiries and orders from one place.</p>
+  </section>
 
-<div class="container admin-wrap">
-  <div id="loginCard" class="admin-card">
-    <h2>Admin Login</h2>
-    <p>Login with your Firebase admin account.</p>
-    <form id="loginForm" class="admin-form">
-      <input type="email" id="adminEmail" placeholder="Admin email" required>
-      <input type="password" id="adminPassword" placeholder="Password" required>
-      <button type="submit">Login</button>
-    </form>
-    <p id="loginError" class="admin-error"></p>
-  </div>
-
-  <div id="dashboard" class="admin-card" style="display:none;">
-    <div class="admin-header">
-      <h2>Enquiries Dashboard</h2>
-      <button id="logoutBtn" class="btn-secondary">Logout</button>
+  <div class="container admin-wrap">
+    <div id="loginCard" class="admin-card">
+      <h2>Admin Login</h2>
+      <p>Login with your Firebase admin account.</p>
+      <form id="loginForm" class="admin-form">
+        <input type="email" id="adminEmail" placeholder="Admin email" required>
+        <input type="password" id="adminPassword" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+      <p id="loginError" class="admin-error"></p>
     </div>
-    <p class="admin-meta">Signed in as: <span id="adminUser">-</span></p>
+    
+   <div id="dashboard" class="admin-card" style="display:none;">
+      <div class="admin-header">
+        <h2>Admin Dashboard</h2>
+        <button id="logoutBtn" class="btn-secondary">Logout</button>
+      </div>
+      <p class="admin-meta">Signed in as: <span id="adminUser">-</span></p>
 
-    <div class="admin-table-wrap">
-      <h3>Enquiries + Orders</h3>
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Details</th>
-            <th>Created</th>
-          </tr>
-        </thead>
-         <tbody id="dashboardRows">
-            <tr><td colspan="6">Loading records...</td></tr>
-        </tbody>
-      </table>
+      <div class="admin-table-wrap">
+        <h3>Enquiries + Orders</h3>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Details</th>
+              <th>Created</th>
+            </tr>
+          </thead>
+          <tbody id="dashboardRows"></tbody>
+        </table>
+      </div>
     </div>
   </div>
   
-   <div class="admin-table-wrap">
+  <div class="admin-table-wrap">
       <h3>Orders</h3>
       <table class="admin-table">
         <thead>
