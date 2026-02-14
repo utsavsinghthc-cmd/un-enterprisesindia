@@ -69,6 +69,7 @@ function renderOrders(snapshot) {
     .join("");
 }
 
+
 function setLoggedInView(user) {
   byId("loginCard").style.display = "none";
   byId("dashboard").style.display = "block";
