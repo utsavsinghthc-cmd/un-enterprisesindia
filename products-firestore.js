@@ -7,16 +7,36 @@ function escapeHtml(value) {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/\"/g, "&quot;")
+    .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 }
 
 let allProducts = [];
 let cart = [];
 
+/* ===============================
+   SAFE PRODUCT FIELD MAPPING
+================================ */
+function normalizeProduct(raw) {
+  return {
+    id: raw.id,
+    name: raw.name || raw["Product Name"] || "Product",
+    price: raw.price || raw.Price || "-",
+    image: raw.image || raw["Image Path (images/filename.jpg)"] || raw.imagePath || "",
+    description: raw.description || raw.Description || "",
+    stock: raw.stock || raw.Stock || 0,
+    status: raw.status || raw.Status || "Active"
+  };
+}
+
+/* ===============================
+   RENDER PRODUCTS
+================================ */
 function renderProducts(products) {
 
   const container = byId("products");
+
+  if (!container) return;
 
   if (!products.length) {
     container.innerHTML = "<p>No products available.</p>";
@@ -25,11 +45,10 @@ function renderProducts(products) {
 
   container.innerHTML = products.map(product => `
     <div class="product-card">
-      <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}">
+      ${product.image ? `<img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}">` : ""}
       <h3>${escapeHtml(product.name)}</h3>
       <p><b>Price:</b> ${escapeHtml(product.price)}</p>
       <p>${escapeHtml(product.description)}</p>
-
       <button onclick="addToCart('${product.id}')">
         Add to Cart
       </button>
@@ -37,25 +56,30 @@ function renderProducts(products) {
   `).join("");
 }
 
-function addToCart(id) {
+/* ===============================
+   CART FUNCTIONS
+================================ */
+window.addToCart = function(id) {
 
   const product = allProducts.find(p => p.id === id);
   if (!product) return;
 
   cart.push(product);
   byId("cartCount").textContent = cart.length;
-}
+};
 
 window.openCart = function() {
 
   const box = byId("cartItems");
   const popup = byId("cartPopup");
 
+  if (!box || !popup) return;
+
   if (!cart.length) {
     box.innerHTML = "<p>Cart is empty</p>";
   } else {
     box.innerHTML = cart.map((item, index) => `
-      <div>
+      <div class="cart-item">
         <b>${escapeHtml(item.name)}</b>
         <p>${escapeHtml(item.price)}</p>
         <button onclick="removeFromCart(${index})">
@@ -74,6 +98,13 @@ window.removeFromCart = function(index) {
   openCart();
 };
 
+window.closeCart = function() {
+  byId("cartPopup").style.display = "none";
+};
+
+/* ===============================
+   CHECKOUT
+================================ */
 window.checkout = function() {
 
   if (!cart.length) {
@@ -107,19 +138,27 @@ window.checkout = function() {
   closeCart();
 };
 
-window.closeCart = function() {
-  byId("cartPopup").style.display = "none";
-};
-
+/* ===============================
+   FIRESTORE LOAD
+================================ */
 window.addEventListener("DOMContentLoaded", () => {
 
-  window.db.collection("products")
-   .onSnapshot(snapshot => {
+  if (!window.db) {
+    console.error("Firestore not initialized");
+    return;
+  }
 
-      allProducts = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
+  window.db.collection("products")
+    .onSnapshot(snapshot => {
+
+      allProducts = snapshot.docs.map(doc =>
+        normalizeProduct({
+          id: doc.id,
+          ...doc.data()
+        })
+      );
+
+      console.log("Products loaded:", allProducts);
 
       renderProducts(allProducts);
     });
