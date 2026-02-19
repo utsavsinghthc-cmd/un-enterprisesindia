@@ -114,8 +114,7 @@ window.closeCart = function() {
 window.addEventListener("DOMContentLoaded", () => {
 
   window.db.collection("products")
-    .where("status", "==", "Active")
-    .onSnapshot(snapshot => {
+   .onSnapshot(snapshot => {
 
       allProducts = snapshot.docs.map(doc => ({
         id: doc.id,
