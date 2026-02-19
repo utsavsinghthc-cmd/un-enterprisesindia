@@ -113,7 +113,8 @@ window.addEventListener("DOMContentLoaded", () => {
   const loginForm = byId("loginForm");
   const loginError = byId("loginError");
   const logoutBtn = byId("logoutBtn");
-
+const uploadCsvBtn = byId("uploadCsvBtn");
+  
   const state = {
     enquiries: [],
     orders: [],
@@ -169,6 +170,10 @@ window.addEventListener("DOMContentLoaded", () => {
   logoutBtn.addEventListener("click", () => {
     window.auth.signOut();
   });
+  
+  uploadCsvBtn.addEventListener("click", () => {
+    window.uploadCSV();
+  });
 
   window.auth.onAuthStateChanged(user => {
     if (user) {
@@ -211,3 +216,51 @@ window.addEventListener("DOMContentLoaded", () => {
     setLoggedOutView();
   });
 });
+
+window.uploadCSV = function() {
+
+  const fileInput = document.getElementById("csvFile");
+  const status = document.getElementById("uploadStatus");
+
+  if (!fileInput.files.length) {
+    alert("Please select a CSV file.");
+    return;
+  }
+
+  const file = fileInput.files[0];
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+
+    const lines = e.target.result.split("\n");
+    const headers = lines[0].split(",");
+
+    let count = 0;
+
+    for (let i = 1; i < lines.length; i++) {
+
+      if (!lines[i]) continue;
+
+      const data = lines[i].split(",");
+
+      const product = {
+        name: data[0]?.trim(),
+        category: data[1]?.trim(),
+        categoryKey: data[2]?.trim(),
+        price: data[3]?.trim(),
+        stock: parseInt(data[4]) || 0,
+        image: data[5]?.trim(),
+        description: data[6]?.trim(),
+        status: data[7]?.trim() || "Active",
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+
+      window.db.collection("products").add(product);
+      count++;
+    }
+
+    status.textContent = count + " products uploaded successfully!";
+  };
+
+  reader.readAsText(file);
+};
