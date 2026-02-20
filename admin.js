@@ -113,7 +113,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const loginForm = byId("loginForm");
   const loginError = byId("loginError");
   const logoutBtn = byId("logoutBtn");
-const uploadCsvBtn = byId("uploadCsvBtn");
+   const uploadCsvBtn = byId("uploadCsvBtn");
   
   const state = {
     enquiries: [],
@@ -217,7 +217,39 @@ const uploadCsvBtn = byId("uploadCsvBtn");
   });
 });
 
-window.uploadCSV = function() {
+function parseCsvLine(line) {
+  const values = [];
+  let current = "";
+  let inQuotes = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    const nextChar = line[i + 1];
+
+    if (char === '"') {
+      if (inQuotes && nextChar === '"') {
+        current += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+      continue;
+    }
+
+    if (char === "," && !inQuotes) {
+      values.push(current.trim());
+      current = "";
+      continue;
+    }
+
+    current += char;
+  }
+
+  values.push(current.trim());
+  return values;
+}
+
+window.uploadCSV = async function() {
 
   const fileInput = document.getElementById("csvFile");
   const status = document.getElementById("uploadStatus");
@@ -227,39 +259,74 @@ window.uploadCSV = function() {
     return;
   }
 
+  const uploadBtn = byId("uploadCsvBtn");
   const file = fileInput.files[0];
   const reader = new FileReader();
 
-  reader.onload = function(e) {
+ status.textContent = "Uploading...";
+  if (uploadBtn) {
+    uploadBtn.disabled = true;
+  }
+      reader.onload = async function(e) {
+    try {
+      const content = String(e.target?.result || "").replace(/\r/g, "");
+      const lines = content
+        .split("\n")
+        .map(line => line.trim())
+        .filter(Boolean);
 
-    const lines = e.target.result.split("\n");
-    const headers = lines[0].split(",");
+      if (lines.length <= 1) {
+        status.textContent = "No product rows found in CSV.";
+        return;
+      }
 
-    let count = 0;
+      let count = 0;
+      const uploadTasks = [];
 
-    for (let i = 1; i < lines.length; i++) {
+      for (let i = 1; i < lines.length; i++) {
+        const data = parseCsvLine(lines[i]);
 
-      if (!lines[i]) continue;
+        if (!data.length || !data[0]) {
+          continue;
+        }
 
-      const data = lines[i].split(",");
+        const product = {
+          name: data[0] || "",
+          category: data[1] || "",
+          categoryKey: (data[2] || "").toLowerCase(),
+          price: data[3] || "",
+          stock: parseInt(data[4], 10) || 0,
+          image: data[5] || "",
+          description: data[6] || "",
+          status: data[7] || "Active",
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
 
-      const product = {
-        name: data[0]?.trim(),
-        category: data[1]?.trim(),
-        categoryKey: data[2]?.trim(),
-        price: data[3]?.trim(),
-        stock: parseInt(data[4]) || 0,
-        image: data[5]?.trim(),
-        description: data[6]?.trim(),
-        status: data[7]?.trim() || "Active",
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        uploadTasks.push(window.db.collection("products").add(product));
+        count++;
+      }
+
+      if (!uploadTasks.length) {
+        status.textContent = "No valid product rows found in CSV.";
+        return;
+      }
+
+      await Promise.all(uploadTasks);
+      status.textContent = count + " products uploaded successfully!";
+      fileInput.value = "";
+    } catch (error) {
+      status.textContent = "Upload failed: " + error.message;
+    } finally {
+      if (uploadBtn) {
+        uploadBtn.disabled = false;
+          }
+        } 
       };
-
-      window.db.collection("products").add(product);
-      count++;
+    reader.onerror = function() {
+    status.textContent = "Unable to read CSV file.";
+    if (uploadBtn) {
+      uploadBtn.disabled = false;
     }
-
-    status.textContent = count + " products uploaded successfully!";
   };
 
   reader.readAsText(file);
