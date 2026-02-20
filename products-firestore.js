@@ -22,7 +22,7 @@ function normalizeProduct(raw) {
   return {
     id: raw.id,
     name: raw.name || raw["Product Name"] || "Product",
-     category: raw.category || raw.Category || "General",
+    category: raw.category || raw.Category || "General",
     categoryKey: (raw.categoryKey || raw["Category Key"] || "").toLowerCase(),
     price: raw.price || raw.Price || "-",
     image: raw.image || raw["Image Path (images/filename.jpg)"] || raw.imagePath || "",
@@ -30,6 +30,43 @@ function normalizeProduct(raw) {
     stock: raw.stock || raw.Stock || 0,
     status: raw.status || raw.Status || "Active"
   };
+}
+
+function hasCorruptedMarker(value) {
+  const text = String(value || "");
+  const lower = text.toLowerCase();
+
+  const markers = [
+    "[content_types].xml",
+    "docprops/",
+    "_rels/",
+    "xl/",
+    "sharedstrings.xml",
+    "workbook.xml",
+    "styles.xml"
+  ];
+
+  if (markers.some(marker => lower.includes(marker))) {
+    return true;
+  }
+
+  return text.includes("�") || /^pk/i.test(text.trim());
+}
+
+function isDisplayableProduct(product) {
+  const name = String(product.name || "").trim();
+  const category = String(product.category || "").trim();
+  const description = String(product.description || "").trim();
+
+  if (!name || name === "-") {
+    return false;
+  }
+
+  if (hasCorruptedMarker(name) || hasCorruptedMarker(category) || hasCorruptedMarker(description)) {
+    return false;
+  }
+
+  return true;
 }
 
 /* ===============================
@@ -200,10 +237,10 @@ window.addEventListener("DOMContentLoaded", () => {
           id: doc.id,
           ...doc.data()
         })
-      );
+      ).filter(isDisplayableProduct);
 
-       visibleProducts = [...allProducts];
-      
+      visibleProducts = [...allProducts];
+
       console.log("Products loaded:", allProducts);
 
       renderProducts(allProducts);
