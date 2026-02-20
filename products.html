@@ -1,109 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-
-    <title>Products | UN Enterprises – Office Supplies, Printers & Photocopiers</title>
-
-    <meta name="description" content="Browse products by UN Enterprises including office supplies, printers, photocopiers, stationery, office furniture and electrical items in Lucknow.">
-
-    <meta name="keywords" content="office products Lucknow, printers, photocopiers, stationery, office furniture, electrical items">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="canonical" href="https://unenterprisesindia.in/products.html">
-
-    <meta property="og:title" content="Products | UN Enterprises">
-    <meta property="og:description" content="Office supplies, printers, photocopiers and electrical products by UN Enterprises.">
-    <meta property="og:url" content="https://unenterprisesindia.in/products.html">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://unenterprisesindia.in/images/printer.jpg">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="icon" href="images/printer.jpg" type="image/jpeg">
-    <link rel="stylesheet" href="style.css">
-</head>
-<!-- Firebase -->
-<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
-<script defer src="firebase-config.js"></script>
-
-<body>
-
-<!-- NAVBAR -->
-<nav class="navbar">
-    <div class="logo">UN ENTERPRISES</div>
-    <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="contact.html">Contact</a>
-        <a href="admin.html">Admin</a>
-        <a href="#" onclick="openCart()" class="cart-link">
-            <span class="cart-icon">🛒</span>
-            (<span id="cartCount">0</span>)
-        </a>
-    </div>
-</nav>
-
-<section class="page-hero">
-    <h1>Our Products</h1>
-    <p>Explore automation, printing, stationery, furniture, and electrical essentials for every office setup.</p>
-    <a href="contact.html" class="btn-primary">Request a Quotation</a>
-</section>
-
-<div class="container">
-    <h2>Browse by Category</h2>
-
-    <!-- SEARCH + FILTER TOOLS -->
-    <div class="tools">
-        <input
-            type="text"
-            id="search"
-            placeholder="Search products..."
-            onkeyup="searchProducts()">
-
-        <div class="filter-buttons">
-            <button onclick="filterCategory('all')">All</button>
-            <button onclick="filterCategory('electrical')">Electrical</button>
-            <button onclick="filterCategory('automation')">Automation</button>
-            <button onclick="filterCategory('furniture')">Furniture</button>
-            <button onclick="filterCategory('stationery')">Stationery</button>
-            <button onclick="filterCategory('photocopier')">Photocopiers</button>
-            <button onclick="filterCategory('printer')">Printers</button>
-            <button onclick="filterCategory('cartridge')">Cartridges</button>
-        </div>
-    </div>
-
-    <!-- PRODUCTS (AUTO LOADED FROM products.json) -->
-    <div class="product-grid" id="products"></div>
-</div>
-
-<!-- WHATSAPP FLOAT -->
-<a href="https://wa.me/916386319056?text=Hello%20UN%20ENTERPRISES,%20I%20want%20to%20enquire%20about%20your%20products."
-   class="whatsapp-float" target="_blank" rel="noopener">
-   Chat on WhatsApp
-</a>
-
-<!-- CART POPUP -->
-<div id="cartPopup" class="cart-popup">
-    <div class="cart-box">
-        <h3>Your Cart</h3>
-
-        <div id="cartItems"></div>
-
-        <div class="cart-actions">
-            <button onclick="checkout()">Checkout on WhatsApp</button>
-            <button onclick="closeCart()">Close</button>
-        </div>
-    </div>
-</div>
-
-<!-- JS -->
-<script src="script.js?v=FINAL_2026" defer></script>
-
-</body>
-</html>
+<!DOCTYPE html>␊
+<html lang="en">␊
+<head>␊
+    <meta charset="UTF-8">␊
+␊
+    <title>Products | UN Enterprises – Office Supplies, Printers & Photocopiers</title>␊
+␊
+    <meta name="description" content="Browse products by UN Enterprises including office supplies, printers, photocopiers, stationery, office furniture and electrical items in Lucknow.">␊
+␊
+    <meta name="keywords" content="office products Lucknow, printers, photocopiers, stationery, office furniture, electrical items">␊
+␊
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">␊
+␊
+    <link rel="canonical" href="https://unenterprisesindia.in/products.html">␊
+␊
+    <meta property="og:title" content="Products | UN Enterprises">␊
+    <meta property="og:description" content="Office supplies, printers, photocopiers and electrical products by UN Enterprises.">␊
+    <meta property="og:url" content="https://unenterprisesindia.in/products.html">␊
+    <meta property="og:type" content="website">␊
+    <meta property="og:image" content="https://unenterprisesindia.in/images/printer.jpg">␊
+␊
+    <link rel="preconnect" href="https://fonts.googleapis.com">␊
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>␊
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">␊
+    <link rel="icon" href="images/printer.jpg" type="image/jpeg">␊
+    <link rel="stylesheet" href="style.css">␊
+</head>␊
+<!-- Firebase -->␊
+<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>␊
+<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>␊
+<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>␊
+<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>␊
+<script defer src="firebase-config.js"></script>␊
+␊
+<body>␊
+␊
+<!-- NAVBAR -->␊
+<nav class="navbar">␊
+    <div class="logo">UN ENTERPRISES</div>␊
+    <div class="nav-links">␊
+        <a href="index.html">Home</a>␊
+        <a href="products.html">Products</a>␊
+        <a href="contact.html">Contact</a>␊
+        <a href="admin.html">Admin</a>␊
+        <a href="#" onclick="openCart()" class="cart-link">␊
+            <span class="cart-icon">🛒</span>␊
+            (<span id="cartCount">0</span>)␊
+        </a>␊
+    </div>␊
+</nav>␊
+␊
+<section class="page-hero">␊
+    <h1>Our Products</h1>␊
+    <p>Explore automation, printing, stationery, furniture, and electrical essentials for every office setup.</p>␊
+    <a href="contact.html" class="btn-primary">Request a Quotation</a>␊
+</section>␊
+␊
+<div class="container">␊
+    <h2>Browse by Category</h2>␊
+␊
+    <!-- SEARCH + FILTER TOOLS -->␊
+    <div class="tools">␊
+        <input␊
+            type="text"␊
+            id="search"␊
+            placeholder="Search products..."␊
+            onkeyup="searchProducts()">␊
+␊
+        <div class="filter-buttons">␊
+            <button onclick="filterCategory('all')">All</button>␊
+            <button onclick="filterCategory('electrical')">Electrical</button>␊
+            <button onclick="filterCategory('automation')">Automation</button>␊
+            <button onclick="filterCategory('furniture')">Furniture</button>␊
+            <button onclick="filterCategory('stationery')">Stationery</button>␊
+            <button onclick="filterCategory('photocopier')">Photocopiers</button>␊
+            <button onclick="filterCategory('printer')">Printers</button>␊
+            <button onclick="filterCategory('cartridge')">Cartridges</button>␊
+        </div>␊
+    </div>␊
+␊
+    <!-- PRODUCTS (AUTO LOADED FROM products.json) -->␊
+    <div class="product-grid" id="products"></div>␊
+</div>␊
+␊
+<!-- WHATSAPP FLOAT -->␊
+<a href="https://wa.me/916386319056?text=Hello%20UN%20ENTERPRISES,%20I%20want%20to%20enquire%20about%20your%20products."␊
+   class="whatsapp-float" target="_blank" rel="noopener">␊
+   Chat on WhatsApp␊
+</a>␊
+␊
+<!-- CART POPUP -->␊
+<div id="cartPopup" class="cart-popup">␊
+    <div class="cart-box">␊
+        <h3>Your Cart</h3>␊
+␊
+        <div id="cartItems"></div>␊
+␊
+        <div class="cart-actions">␊
+            <button onclick="checkout()">Checkout on WhatsApp</button>␊
+            <button onclick="closeCart()">Close</button>␊
+        </div>␊
+    </div>␊
+</div>␊
+␊
+<!-- JS -->␊
+<script src="products-firestore.js?v=FIRESTORE_PRODUCTS" defer></script>
+␊
+</body>␊
+</html>␊
