@@ -113,7 +113,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const loginForm = byId("loginForm");
   const loginError = byId("loginError");
   const logoutBtn = byId("logoutBtn");
-   const uploadCsvBtn = byId("uploadCsvBtn");
+  const uploadCsvBtn = byId("uploadCsvBtn");
   
   const state = {
     enquiries: [],
@@ -249,10 +249,40 @@ function parseCsvLine(line) {
   return values;
 }
 
+function isValidCsvFile(file) {
+  const fileName = String(file?.name || "").toLowerCase();
+  return fileName.endsWith(".csv");
+}
+
+function isLikelyBinaryContent(content) {
+  if (!content) return false;
+
+  if (content.includes("\u0000")) {
+    return true;
+  }
+
+  const sample = content.slice(0, 3000);
+  let controlChars = 0;
+
+  for (let i = 0; i < sample.length; i++) {
+    const code = sample.charCodeAt(i);
+    if (code < 9 || (code > 13 && code < 32)) {
+      controlChars++;
+    }
+  }
+
+  return controlChars > 20;
+}
+
 window.uploadCSV = async function() {
 
   const fileInput = document.getElementById("csvFile");
   const status = document.getElementById("uploadStatus");
+
+  if (!fileInput || !status) {
+    alert("Upload controls not found.");
+    return;
+  }
 
   if (!fileInput.files.length) {
     alert("Please select a CSV file.");
@@ -261,21 +291,47 @@ window.uploadCSV = async function() {
 
   const uploadBtn = byId("uploadCsvBtn");
   const file = fileInput.files[0];
+
+  if (!isValidCsvFile(file)) {
+    status.textContent = "Please upload only a .csv file (not .xlsx/.xls).";
+    return;
+  }
+
   const reader = new FileReader();
 
- status.textContent = "Uploading...";
+  status.textContent = "Uploading...";
   if (uploadBtn) {
     uploadBtn.disabled = true;
   }
-      reader.onload = async function(e) {
+
+  reader.onload = async function(e) {
     try {
       const content = String(e.target?.result || "").replace(/\r/g, "");
+
+      if (isLikelyBinaryContent(content)) {
+        status.textContent = "Invalid file content. Please upload a valid text CSV file.";
+        return;
+      }
+
       const lines = content
         .split("\n")
         .map(line => line.trim())
         .filter(Boolean);
 
-      if (lines.length <= 1) {
+      if (!lines.length) {
+        status.textContent = "No product rows found in CSV.";
+        return;
+      }
+
+      const firstRow = parseCsvLine(lines[0]).map(cell => cell.toLowerCase());
+      const expectedHeaders = ["name", "category", "categorykey", "price", "stock", "image", "description", "status"];
+      const looksLikeHeader = expectedHeaders.every((header, index) =>
+        String(firstRow[index] || "").replace(/\s+/g, "") === header
+      );
+
+      const startRow = looksLikeHeader ? 1 : 0;
+
+      if (lines.length <= startRow) {
         status.textContent = "No product rows found in CSV.";
         return;
       }
@@ -283,7 +339,7 @@ window.uploadCSV = async function() {
       let count = 0;
       const uploadTasks = [];
 
-      for (let i = 1; i < lines.length; i++) {
+      for (let i = startRow; i < lines.length; i++) {
         const data = parseCsvLine(lines[i]);
 
         if (!data.length || !data[0]) {
@@ -319,10 +375,11 @@ window.uploadCSV = async function() {
     } finally {
       if (uploadBtn) {
         uploadBtn.disabled = false;
-          }
-        } 
-      };
-    reader.onerror = function() {
+      }
+    }
+  };
+
+  reader.onerror = function() {
     status.textContent = "Unable to read CSV file.";
     if (uploadBtn) {
       uploadBtn.disabled = false;
