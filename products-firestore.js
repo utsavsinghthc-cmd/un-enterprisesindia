@@ -12,6 +12,7 @@ function escapeHtml(value) {
 }
 
 let allProducts = [];
+let visibleProducts = [];
 let cart = [];
 
 /* ===============================
@@ -21,6 +22,8 @@ function normalizeProduct(raw) {
   return {
     id: raw.id,
     name: raw.name || raw["Product Name"] || "Product",
+     category: raw.category || raw.Category || "General",
+    categoryKey: (raw.categoryKey || raw["Category Key"] || "").toLowerCase(),
     price: raw.price || raw.Price || "-",
     image: raw.image || raw["Image Path (images/filename.jpg)"] || raw.imagePath || "",
     description: raw.description || raw.Description || "",
@@ -55,6 +58,47 @@ function renderProducts(products) {
     </div>
   `).join("");
 }
+
+/* ===============================
+   FILTER + SEARCH
+================================ */
+window.filterCategory = function(categoryKey) {
+  const normalizedKey = String(categoryKey || "").toLowerCase();
+
+  if (normalizedKey === "all") {
+    visibleProducts = [...allProducts];
+    renderProducts(visibleProducts);
+    return;
+  }
+
+  visibleProducts = allProducts.filter(product => {
+    const key = String(product.categoryKey || product.category || "").toLowerCase();
+    return key === normalizedKey;
+  });
+
+  renderProducts(visibleProducts);
+};
+
+window.searchProducts = function() {
+  const searchInput = byId("search");
+  const value = String(searchInput?.value || "").trim().toLowerCase();
+
+  if (!value) {
+    renderProducts(visibleProducts.length ? visibleProducts : allProducts);
+    return;
+  }
+
+  const searchBase = visibleProducts.length ? visibleProducts : allProducts;
+
+  const filtered = searchBase.filter(product => {
+    const name = String(product.name || "").toLowerCase();
+    const category = String(product.category || "").toLowerCase();
+    const description = String(product.description || "").toLowerCase();
+    return name.includes(value) || category.includes(value) || description.includes(value);
+  });
+
+  renderProducts(filtered);
+};
 
 /* ===============================
    CART FUNCTIONS
@@ -158,6 +202,8 @@ window.addEventListener("DOMContentLoaded", () => {
         })
       );
 
+       visibleProducts = [...allProducts];
+      
       console.log("Products loaded:", allProducts);
 
       renderProducts(allProducts);
