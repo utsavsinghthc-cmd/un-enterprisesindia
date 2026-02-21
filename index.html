@@ -66,7 +66,11 @@
     integrationID: "ec5aaaef-287f-4a42-b900-93a2ecd6549d", // The ID of this integration.
     region: "au-syd", // The region your integration is hosted in.
     serviceInstanceID: "d0c42d9b-89f0-4285-99ea-d55452be84c4", // The ID of your service instance.
-    onLoad: async (instance) => { await instance.render(); }
+    showLauncher: false,
+    onLoad: async (instance) => {
+      window.watsonAssistantInstance = instance;
+      await instance.render();
+    }
   };
   setTimeout(function(){
     const t=document.createElement('script');
@@ -158,12 +162,37 @@
     <p><b>GSTIN:</b> 09BFEPS7093M1ZK</p>
 </footer>
 
+<aside class="chat-assistant-card" id="chatAssistantCard" aria-live="polite">
+    <button class="chat-assistant-close" id="closeChatAssistant" aria-label="Close assistant card">×</button>
+    <p class="chat-assistant-label">Need quick help?</p>
+    <h3>UN Smart Assistant</h3>
+    <p>Get instant answers for products, pricing and bulk order support.</p>
+    <button class="chat-assistant-btn" id="openChatAssistant">💬 Chat With Us</button>
+</aside>
+
 <!-- WHATSAPP BUTTON -->
 <a href="https://wa.me/916386319056?text=Hello%20UN%20ENTERPRISES,%20I%20want%20to%20enquire%20about%20your%20products."
    class="whatsapp-float" target="_blank" rel="noopener">
    Chat on WhatsApp
 </a>
 
+<script>
+  const openChatAssistant = document.getElementById("openChatAssistant");
+  const closeChatAssistant = document.getElementById("closeChatAssistant");
+  const chatAssistantCard = document.getElementById("chatAssistantCard");
+
+  openChatAssistant?.addEventListener("click", () => {
+    if (window.watsonAssistantInstance?.openWindow) {
+      window.watsonAssistantInstance.openWindow();
+    }
+  });
+
+  closeChatAssistant?.addEventListener("click", () => {
+    chatAssistantCard?.classList.add("chat-assistant-hidden");
+  });
+</script>
+
 </body>
 </html>
+
 
