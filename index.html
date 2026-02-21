@@ -66,8 +66,7 @@
     integrationID: "2f89e326-ec99-4df3-9654-833ee460db93", // The ID of this integration.
     region: "au-syd", // The region your integration is hosted in.
     serviceInstanceID: "d0c42d9b-89f0-4285-99ea-d55452be84c4", // The ID of your service instance.
-    showLauncher: false,
-    onLoad: async (instance) => {
+    onLoad: async (instance) =>  {
       window.watsonAssistantInstance = instance;
       await instance.render();
     }
@@ -194,6 +193,7 @@
 
 </body>
 </html>
+
 
 
 
