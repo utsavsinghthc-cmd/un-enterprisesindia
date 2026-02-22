@@ -681,27 +681,48 @@ h3 {
   bottom: 86px;
   width: min(320px, calc(100vw - 24px));
   z-index: 999;
-  background: linear-gradient(145deg, #0f2f74, #1d4ed8);
+  background: linear-gradient(160deg, #0f2f74 0%, #1d4ed8 56%, #2563eb 100%);
   color: #fff;
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.35);
+  border-radius: 20px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.38);
+  overflow: hidden;
+}
+
+.chat-assistant-glow {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  top: -85px;
+  right: -55px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0));
+  pointer-events: none;
 }
 
 .chat-assistant-hidden {
   display: none;
 }
 
-.chat-assistant-close {
-  position: absolute;
-  top: 8px;
-  right: 10px;
+.chat-assistant-close {␊
+  position: absolute;␊
+  top: 8px;␊
+  right: 10px;␊
   border: none;
   background: transparent;
   color: rgba(255, 255, 255, 0.92);
   font-size: 24px;
   line-height: 1;
-  cursor: pointer;
+ cursor: pointer;
+}
+
+.chat-assistant-card p,
+.chat-assistant-card h3,
+.chat-assistant-btn,
+.chat-assistant-points {
+  position: relative;
+  z-index: 1;
 }
 
 .chat-assistant-label {
@@ -717,4 +738,54 @@ h3 {
   color: #fff;
   font-size: 20px;
 }
+
+.chat-assistant-card > p {
+  margin: 0 0 10px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 14px;
+}
+
+.chat-assistant-points {
+  margin: 0 0 14px;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.chat-assistant-btn {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f2f74;
+  background: linear-gradient(135deg, #ffffff, #dbeafe);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(8, 47, 73, 0.22);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chat-assistant-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(8, 47, 73, 0.32);
+}
+
+.chat-assistant-btn-icon {
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .chat-assistant-card {
+    right: 12px;
+    bottom: 72px;
+  }
+}
+
 
