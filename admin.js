@@ -30,14 +30,16 @@ function escapeHtml(value) {
     .replace(/'/g, "&#39;");
 }
 
-function formatOrderItems(items) {
+function formatOrderItems(items, address) {
   if (!Array.isArray(items) || items.length === 0) {
-    return "-";
+    return address ? `Address: ${address}` : "-";
   }
 
-  return items
-    .map(item => `${item.category || "Product"} (${item.price || "N/A"})`)
+  const itemDetails = items
+    .map(item => `${item.name || item.category || "Product"} (${item.price || "N/A"})`)
     .join(", ");
+  
+  return address ? `${itemDetails} | Address: ${address}` : itemDetails;
 }
 
 function renderDashboardRows(state) {
@@ -58,13 +60,13 @@ function renderDashboardRows(state) {
       name: entry.name || "-",
       email: entry.email || "-",
       phone: entry.phone || "-",
-      details: entry.message || "-",
+      details: formatOrderItems(order.items, order.address),
       createdAt: entry.createdAt
     })),
     ...state.orders.map(order => ({
       type: "Order",
       name: order.name || "-",
-      email: "-",
+      email: order.email || "-",
       phone: order.phone || "-",
       details: formatOrderItems(order.items),
       createdAt: order.createdAt
