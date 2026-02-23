@@ -29,7 +29,28 @@
     <link rel="icon" href="images/photocopier.jpg" type="image/jpeg">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260223">
+
+    <!-- Fallback styles in case external CSS is cached/missing -->
+    <style>
+      body{margin:0;font-family:"Poppins",Arial,sans-serif;background:#f5efe7;color:#2b2b2b;line-height:1.6}
+      .navbar{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:14px 25px;background:linear-gradient(135deg,#1f3440,#2f4858 55%,#8b5e3c);box-shadow:0 12px 30px rgba(39,53,63,.24)}
+      .logo{color:#fff;font-weight:700;font-size:18px;letter-spacing:.7px;text-transform:uppercase}
+      .nav-links{display:flex;gap:18px;flex-wrap:wrap}.nav-links a{color:#fff;text-decoration:none;font-weight:600}
+      .hero{padding:96px 20px;text-align:center;background:linear-gradient(120deg,#2f4858 0%,#8b5e3c 48%,#c28a63 100%);color:#fff}
+      .hero h1{margin:0 0 12px;color:#fff;font-size:40px}.hero p{max-width:860px;margin:0 auto 24px}
+      .hero-buttons{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+      .btn-primary,.btn-secondary{display:inline-block;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:700}
+      .btn-primary{background:linear-gradient(135deg,#8b5e3c,#c28a63);color:#2b2b2b}.btn-secondary{background:#fff;color:#1f3440}
+      .trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:1200px;margin:0 auto;padding:45px 20px}
+      .trust-card,.service-card{background:#fff;border:1px solid rgba(139,108,74,.28);border-radius:14px;box-shadow:0 8px 20px rgba(76,56,38,.12)}
+      .trust-card{padding:22px;text-align:center}.trust-card p{margin:0;color:#5b646d}
+      .services,.why-us{text-align:center;padding:40px 20px}.service-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px}.service-card{padding:16px;font-weight:700}
+      .why-us{background:#efe4d3}.why-us ul{list-style:none;padding:0}.why-us li{font-weight:700;margin:7px 0}
+      .footer{text-align:center;padding:16px;background:#1f3440;color:#fff}
+      .whatsapp-float{position:fixed;right:20px;bottom:20px;padding:12px 18px;border-radius:24px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-weight:700;text-decoration:none;box-shadow:0 12px 25px rgba(0,0,0,.2)}
+      @media (max-width:768px){.navbar{position:static;padding:12px 14px}.hero{padding:72px 16px 54px}.hero h1{font-size:30px}.hero p{font-size:14px}}
+    </style>
 
     <script type="application/ld+json">
         {
@@ -203,10 +224,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
