@@ -1,14 +1,31 @@
 (function () {
-  const CART_KEY = "ue_cart_v1";
+  const CART_KEY = "cart";
+  const LEGACY_CART_KEY = "ue_cart_v1";
 
   function parsePrice(priceText) {
     const match = String(priceText || "0").replace(/,/g, "").match(/[\d.]+/);
     return match ? Number(match[0]) : 0;
   }
+  
+function readCartFromStorage() {
+    const rawCart = localStorage.getItem(CART_KEY);
+    if (rawCart) {
+      return rawCart;
+    }
+
+    const legacyCart = localStorage.getItem(LEGACY_CART_KEY);
+    if (legacyCart) {
+      localStorage.setItem(CART_KEY, legacyCart);
+      localStorage.removeItem(LEGACY_CART_KEY);
+      return legacyCart;
+    }
+
+    return null;
+  }
 
   function getCart() {
     try {
-      const raw = localStorage.getItem(CART_KEY);
+      const raw = readCartFromStorage();
       return raw ? JSON.parse(raw) : [];
     } catch (error) {
       console.error("Failed to parse cart", error);
@@ -17,7 +34,7 @@
   }
 
   function saveCart(cart) {
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    localStorage.setItem(CART_KEY, JSON.stringify(cart || []));
   }
 
   function getCartCount() {
@@ -76,7 +93,7 @@
   }
 
   function clearCart() {
-    localStorage.removeItem(CART_KEY);
+    saveCart([]);
   }
 
   function getCartTotal() {
@@ -94,6 +111,7 @@
     updateItemQty: updateItemQty,
     removeItem: removeItem,
     clearCart: clearCart,
-    getCartTotal: getCartTotal
+    getCartTotal: getCartTotal,
+    storageKey: CART_KEY
   };
 })();
