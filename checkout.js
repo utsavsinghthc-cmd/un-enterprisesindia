@@ -6,6 +6,13 @@ function formatCurrency(amount) {
   return "₹" + amount.toFixed(2);
 }
 
+function refreshCartCount() {
+  const cartCount = byId("cartCount");
+  if (cartCount && window.cartStore) {
+    cartCount.textContent = window.cartStore.getCartCount();
+  }
+}
+
 function renderSummary() {
   const cart = window.cartStore.getCart();
   const summary = byId("checkoutSummary");
@@ -14,6 +21,7 @@ function renderSummary() {
   if (!cart.length) {
     summary.innerHTML = "<p>Your cart is empty. Please add products first.</p>";
     totalNode.textContent = formatCurrency(0);
+    refreshCartCount();
     return;
   }
 
@@ -22,6 +30,11 @@ function renderSummary() {
   }).join("");
 
   totalNode.textContent = formatCurrency(window.cartStore.getCartTotal());
+  refreshCartCount();
+}
+
+function redirectToLoginForCheckout() {
+  window.location.href = "login.html?redirect=" + encodeURIComponent("checkout.html");
 }
 
 window.addEventListener("DOMContentLoaded", function () {
@@ -29,50 +42,55 @@ window.addEventListener("DOMContentLoaded", function () {
 
   const form = byId("checkoutForm");
   const message = byId("checkoutMessage");
+  const navEmail = byId("navUserEmail");
 
-  window.auth.onAuthStateChanged(function (user) {
-    if (!user) {
-      window.location.href = "login.html?redirect=checkout.html";
+  if (window.auth) {
+    window.auth.onAuthStateChanged(function (user) {
+      if (navEmail) {
+        navEmail.textContent = user ? user.email : "";
+        navEmail.style.display = user ? "inline" : "none";
+      }
+    });
+  }
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    message.textContent = "";
+
+    const cartItems = window.cartStore.getCart();
+    if (!cartItems.length) {
+      message.textContent = "Cart is empty.";
       return;
     }
 
-    const navEmail = byId("navUserEmail");
-    if (navEmail) {
-      navEmail.textContent = user.email;
-      navEmail.style.display = "inline";
+     if (!window.auth || !window.auth.currentUser) {
+      redirectToLoginForCheckout();
+      return;
     }
 
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
-
-      const cartItems = window.cartStore.getCart();
-      if (!cartItems.length) {
-        message.textContent = "Cart is empty.";
-        return;
-      }
+    const user = window.auth.currentUser;
 
       const order = {
-        name: byId("name").value.trim(),
-        phone: byId("phone").value.trim(),
-        address: byId("address").value.trim(),
-        userEmail: user.email,
-        userId: user.uid,
-        items: cartItems,
-        totalPrice: window.cartStore.getCartTotal(),
-        status: "Pending",
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      };
+      name: byId("name").value.trim(),
+      phone: byId("phone").value.trim(),
+      address: byId("address").value.trim(),
+      userEmail: user.email,
+      userId: user.uid,
+      items: cartItems,
+      totalPrice: window.cartStore.getCartTotal(),
+      status: "Pending",
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
 
       window.db.collection("orders").add(order)
-        .then(function () {
-          window.cartStore.clearCart();
-          form.reset();
-          renderSummary();
-          message.textContent = "Order placed successfully!";
-        })
-        .catch(function (error) {
-          message.textContent = "Failed to place order: " + error.message;
-        });
+      .then(function () {
+        window.cartStore.clearCart();
+        form.reset();
+        renderSummary();
+        message.textContent = "Order placed successfully!";
+      })
+      .catch(function (error) {
+        message.textContent = "Failed to place order: " + error.message;
+      });
     });
   });
-});
