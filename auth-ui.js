@@ -8,6 +8,14 @@
     return params.get("redirect") || defaultUrl;
   }
 
+
+  function refreshCartCount() {
+    const cartCount = byId("cartCount");
+    if (cartCount && window.cartStore) {
+      cartCount.textContent = window.cartStore.getCartCount();
+    }
+  }
+
   function updateNavbar(user) {
     const emailNode = byId("navUserEmail");
     const authBtn = byId("authActionBtn");
@@ -91,6 +99,7 @@
     }
 
     bindAuthPages();
+    refreshCartCount();
 
     window.auth.onAuthStateChanged(function (user) {
       updateNavbar(user);
