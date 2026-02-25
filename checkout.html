@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout | UN Enterprises</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script defer src="firebase-config.js"></script>
+  <script defer src="cart-utils.js"></script>
+  <script defer src="auth-ui.js"></script>
+  <script defer src="checkout.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">UN ENTERPRISES</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="cart.html">Cart</a>
+      <a href="contact.html">Contact</a>
+      <a href="admin.html">Admin</a>
+      <span id="navUserEmail" class="nav-user-email" style="display:none;"></span>
+      <a href="login.html" id="authActionBtn">Login</a>
+    </div>
+  </nav>
+
+  <div class="container checkout-layout">
+    <div>
+      <h2>Cart Summary</h2>
+      <div id="checkoutSummary" class="checkout-summary"></div>
+      <h3>Total: <span id="checkoutTotal">₹0.00</span></h3>
+    </div>
+    <div>
+      <h2>Delivery Details</h2>
+      <form id="checkoutForm" class="contact-form">
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="text" id="phone" placeholder="Phone Number" required>
+        <textarea id="address" placeholder="Address" required></textarea>
+        <button type="submit">Place Order</button>
+      </form>
+      <p id="checkoutMessage" class="success-text"></p>
+    </div>
+  </div>
+</body>
+</html>
