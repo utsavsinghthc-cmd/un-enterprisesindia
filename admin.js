@@ -60,7 +60,7 @@ function renderDashboardRows(state) {
       name: entry.name || "-",
       email: entry.email || "-",
       phone: entry.phone || "-",
-      details: formatOrderItems(order.items, order.address),
+      details: entry.message || formatOrderItems(entry.items, entry.address),
       createdAt: entry.createdAt
     })),
     ...state.orders.map(order => ({
@@ -68,7 +68,7 @@ function renderDashboardRows(state) {
       name: order.name || "-",
       email: order.email || "-",
       phone: order.phone || "-",
-      details: formatOrderItems(order.items),
+      details: formatOrderItems(order.items, order.address),
       createdAt: order.createdAt
     }))
   ].sort((a, b) => toEpochMillis(b.createdAt) - toEpochMillis(a.createdAt));
