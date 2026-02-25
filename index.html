@@ -75,16 +75,17 @@
         }
     </script>
 </head>
-<!-- Firebase -->
-<!-- 1️⃣ Firebase Core -->
+<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-
-<!-- 2️⃣ Firebase Services -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
-<!-- 3️⃣ Firebase Config -->
+<!-- Firebase Config -->
 <script src="firebase-config.js"></script>
+
+<!-- Your Project Scripts -->
+<script defer src="auth-ui.js"></script>
+<script defer src="cart-utils.js"></script>
     
 <script>
   window.watsonAssistantChatOptions = {
@@ -229,9 +230,5 @@
   });
 </script>
 
-<script defer src="cart-utils.js"></script>
-<script defer src="auth-ui.js"></script>
 </body>
 </html>
-
-
