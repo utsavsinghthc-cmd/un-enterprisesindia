@@ -128,7 +128,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const listeners = {
     enquiriesUnsubscribe: null,
-    ordersUnsubscribe: null
+    ordersUnsubscribe: null,
+    enquiriesTimeout: null,
+    ordersTimeout: null
   };
 
   function clearListeners() {
@@ -141,6 +143,16 @@ window.addEventListener("DOMContentLoaded", () => {
       listeners.ordersUnsubscribe();
       listeners.ordersUnsubscribe = null;
     }
+    
+    if (listeners.enquiriesTimeout) {
+      clearTimeout(listeners.enquiriesTimeout);
+      listeners.enquiriesTimeout = null;
+    }
+
+    if (listeners.ordersTimeout) {
+      clearTimeout(listeners.ordersTimeout);
+      listeners.ordersTimeout = null;
+    }
   }
 
   function resetState() {
@@ -152,6 +164,29 @@ window.addEventListener("DOMContentLoaded", () => {
     state.ordersLoaded = false;
   }
 
+  
+  function setLoadTimeout(source) {
+    const timeoutKey = source + "Timeout";
+    listeners[timeoutKey] = setTimeout(() => {
+      const loadedKey = source + "Loaded";
+      const errorKey = source + "Error";
+
+      if (!state[loadedKey]) {
+        state[loadedKey] = true;
+        state[errorKey] = "Taking longer than expected. Check Firebase rules/network.";
+        renderDashboardRows(state);
+      }
+    }, 7000);
+  }
+
+  function clearLoadTimeout(source) {
+    const timeoutKey = source + "Timeout";
+    if (listeners[timeoutKey]) {
+      clearTimeout(listeners[timeoutKey]);
+      listeners[timeoutKey] = null;
+    }
+  }
+  
   if (!window.firebase || !window.auth || !window.db) {
     loginError.textContent = "Firebase is not initialized correctly.";
     return;
@@ -183,14 +218,19 @@ window.addEventListener("DOMContentLoaded", () => {
       resetState();
       renderDashboardRows(state);
 
+       setLoadTimeout("enquiries");
+      setLoadTimeout("orders");
+      
       listeners.enquiriesUnsubscribe = window.db
         .collection("enquiries")
         .onSnapshot(snapshot => {
+          clearLoadTimeout("enquiries");
           state.enquiries = snapshot.docs.map(doc => doc.data());
           state.enquiriesLoaded = true;
           state.enquiriesError = "";
           renderDashboardRows(state);
         }, error => {
+          clearLoadTimeout("enquiries");
           state.enquiriesLoaded = true;
           state.enquiriesError = error.message;
           renderDashboardRows(state);
@@ -199,11 +239,13 @@ window.addEventListener("DOMContentLoaded", () => {
       listeners.ordersUnsubscribe = window.db
         .collection("orders")
         .onSnapshot(snapshot => {
+          clearLoadTimeout("orders");
           state.orders = snapshot.docs.map(doc => doc.data());
           state.ordersLoaded = true;
           state.ordersError = "";
           renderDashboardRows(state);
         }, error => {
+          clearLoadTimeout("orders");
           state.ordersLoaded = true;
           state.ordersError = error.message;
           renderDashboardRows(state);
