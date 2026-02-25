@@ -76,11 +76,13 @@
     </script>
 </head>
 <!-- Firebase -->
-<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
-<script defer src="firebase-config.js"></script>
+<!-- Firebase SDK (NO DEFER) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+<!-- Firebase Config -->
+<script src="firebase-config.js"></script>
     
 <script>
   window.watsonAssistantChatOptions = {
@@ -229,3 +231,4 @@
 <script defer src="auth-ui.js"></script>
 </body>
 </html>
+
