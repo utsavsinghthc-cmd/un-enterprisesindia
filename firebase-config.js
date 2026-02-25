@@ -7,10 +7,17 @@ var firebaseConfig = {
   appId: "1:1083661598291:web:98a54861b83146e2c490a6"
 };
 
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
-// 🔥 MAKE DB GLOBAL
-window.db = firebase.firestore();
 window.auth = firebase.auth();
+
+if (typeof firebase.firestore === "function") {
+  window.db = firebase.firestore();
+} else {
+  window.db = null;
+  console.warn("Firestore SDK not loaded on this page.");
+}
 
 console.log("Firebase connected successfully");
